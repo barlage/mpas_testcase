@@ -1,7 +1,7 @@
 # create_mpas_testcase
 Environment to create pre-defined MPAS test cases
 
-Available cases:
+## Available cases:
 
 GFS input data: 2023-03-10_15.00.00  (conus and global domains, 2 days of LBCs and SSTs)
 
@@ -9,7 +9,13 @@ RAP input data: 2024-02-02_18.00.00  (conus only, 3 hours of LBCs)
 
 RAP input data: 2024-08-15_18.00.00  (conus only, 3 hours of LBCs)
 
-Configuration options set at the top of the script [options]
+## Resources needed:
+
+conus: ntasks = 8; time = 10 minutes
+
+global: ntasks = 36; time = 30 minutes
+
+## Configuration options set at the top of the script [options]
 
 `modules` : modules used to compile init_atmosphere 
 

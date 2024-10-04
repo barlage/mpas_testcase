@@ -19,7 +19,9 @@ global: ntasks = 36; time = 30 minutes
 
 `modules` : modules used to compile init_atmosphere 
 
-`clean` : if "true", will clobber the case directory
+`clean_before` : if "true", will clobber the case directory (will then recreate static file, which is the slowest step)
+
+`clean_after` : if "true", remove the step run directories
 
 `case_base` : directory where you want the case to be created 
 

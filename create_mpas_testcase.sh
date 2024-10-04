@@ -20,7 +20,7 @@
 #SBATCH --chdir=.
 
 modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
-clean_before="true"
+clean_before="false"
 clean_after="true"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase/"
 executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
@@ -100,8 +100,14 @@ else
 
 cp $script_home/case_files/$code_base/$domain/$source/step1_static/* .
 
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.8 .
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.grid.nc .
+if [ $domain = "conus" ]; then 
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.grid.nc .
+elif [ $domain = "global" ]; then 
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.grid.nc global.120km.grid.nc
+fi
+
 ln -sf $executable init_atmosphere_model
 
 time srun -n $SLURM_NTASKS ./init_atmosphere_model
@@ -134,8 +140,12 @@ else
 
 cp $script_home/case_files/$code_base/$domain/$source/step2_init/* .
 
+if [ $domain = "conus" ]; then 
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
+elif [ $domain = "global" ]; then 
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
+fi
 
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.8 .
 ln -sf $source_directory/gfs/GFS:2023-03-10_15 .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step1_static/$static_file .
@@ -157,6 +167,8 @@ fi  # init file exist check
 # create lbc file
 ################################################################
 
+if [ $domain = "conus" ]; then 
+
 echo
 echo "################################################################"
 echo "# Start creating: $lbc_file"
@@ -175,7 +187,7 @@ else
 cp $script_home/case_files/$code_base/$domain/$source/step3_lbc/* .
 
 
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.8 .
+ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
 ln -sf $source_directory/gfs/GFS* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/$init_file .
@@ -192,6 +204,8 @@ if [ ! -e $lbc_file ]; then
 fi
 
 fi  # lbc file exist check
+
+fi  # domain = conus
 
 ################################################################
 # create sst file (currently gfs case only)
@@ -216,8 +230,12 @@ else
 
 cp $script_home/case_files/$code_base/$domain/$source/step4_sst/* .
 
+if [ $domain = "conus" ]; then 
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
+elif [ $domain = "global" ]; then 
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
+fi
 
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.8 .
 ln -sf $source_directory/sst/SST* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/$init_file .
@@ -248,7 +266,9 @@ echo "################################################################"
 
 mv ../step1_static/$static_file .
 mv ../step2_init/$init_file .
-mv ../step3_lbc/$lbc_file .
+if [ $domain = "conus" ]; then 
+ mv ../step3_lbc/$lbc_file .
+fi
 mv ../step4_sst/$sst_file .
 
 echo "These files were created with:" > description
@@ -266,7 +286,9 @@ if [ $clean_after = "true" ]; then
 
   rm -Rf ../step1_static
   rm -Rf ../step2_init
-  rm -Rf ../step3_lbc
+  if [ $domain = "conus" ]; then 
+   rm -Rf ../step3_lbc
+  fi
   rm -Rf ../step4_sst
   
 fi

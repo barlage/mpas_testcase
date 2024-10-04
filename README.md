@@ -3,11 +3,11 @@ Environment to create pre-defined MPAS test cases
 
 Available cases:
 
-GFS input data: 2023-03-10_15.00.00  (conus and global domains)
+GFS input data: 2023-03-10_15.00.00  (conus and global domains, 2 days of LBCs and SSTs)
 
-RAP input data: 2024-02-02_18.00.00  (conus only)
+RAP input data: 2024-02-02_18.00.00  (conus only, 3 hours of LBCs)
 
-RAP input data: 2024-08-15_18.00.00  (conus only)
+RAP input data: 2024-08-15_18.00.00  (conus only, 3 hours of LBCs)
 
 Configuration options set at the top of the script [options]
 
@@ -33,4 +33,4 @@ Configuration options set at the top of the script [options]
 
 `source` : input data source ["gfs","rap"]
 
-`use_climo_aerosols` : if "true", add climo aerosols to init file
+`use_climo_aerosols` : if "true", add climo aerosols to init and lbc file

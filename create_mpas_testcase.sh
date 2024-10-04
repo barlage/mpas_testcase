@@ -20,7 +20,8 @@
 #SBATCH --chdir=.
 
 modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
-clean="true"
+clean_before="true"
+clean_after="true"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase/"
 executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
 yyyy="2023"
@@ -43,6 +44,7 @@ init_file="mpas."$code_base"."$domain".120km."$source".init."$datestring".nc"
 lbc_file="mpas."$code_base"."$domain".120km."$source".lbc."$datestring".nc"
 sst_file="mpas."$code_base"."$domain".120km."$source".sfc_update."$datestring".nc"
 script_home=$PWD
+source_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ungrib"
 
 echo
 echo "################################################################"
@@ -56,6 +58,7 @@ echo "executable:         $executable"
 echo "code_base:          $code_base"
 echo "domain:             $domain"
 echo "input source:       $source"
+echo "source directory:   $source_directory"
 echo "use_climo_aerosols: $use_climo_aerosols"
 echo "static_file:        $static_file"
 echo "init_file:          $init_file"
@@ -66,10 +69,10 @@ module purge
 module load $modules
 
 ################################################################
-# remove case directory if exists and clean is true
+# remove case directory if exists and clean_before is true
 ################################################################
 
-if [ $clean = "true" ]; then 
+if [ $clean_before = "true" ]; then 
   if [ -d $case_base$case_directory ]; then 
     echo "directory $case_base$case_directory exists is being removed"
     rm -Rf $case_base$case_directory
@@ -133,7 +136,7 @@ cp $script_home/case_files/$code_base/$domain/$source/step2_init/* .
 
 
 ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.8 .
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ungrib/gfs/GFS:2023-03-10_15 .
+ln -sf $source_directory/gfs/GFS:2023-03-10_15 .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step1_static/$static_file .
 
@@ -173,7 +176,7 @@ cp $script_home/case_files/$code_base/$domain/$source/step3_lbc/* .
 
 
 ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.8 .
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ungrib/gfs/GFS* .
+ln -sf $source_directory/gfs/GFS* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/$init_file .
 
@@ -215,7 +218,7 @@ cp $script_home/case_files/$code_base/$domain/$source/step4_sst/* .
 
 
 ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.8 .
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ungrib/sst/SST* .
+ln -sf $source_directory/sst/SST* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/$init_file .
 
@@ -247,6 +250,26 @@ mv ../step1_static/$static_file .
 mv ../step2_init/$init_file .
 mv ../step3_lbc/$lbc_file .
 mv ../step4_sst/$sst_file .
+
+echo "These files were created with:" > description
+echo "modules:            $modules" >> description
+echo "executable:         $executable" >> description
+echo "use_climo_aerosols: $use_climo_aerosols" >> description
+echo "intermediate files: $source_directory" >> description
+
+if [ $clean_after = "true" ]; then 
+  
+  echo
+  echo "################################################################"
+  echo "# Cleaning up run directories"
+  echo "################################################################"
+
+  rm -Rf ../step1_static
+  rm -Rf ../step2_init
+  rm -Rf ../step3_lbc
+  rm -Rf ../step4_sst
+  
+fi
 
 echo
 echo "################################################################"

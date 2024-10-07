@@ -9,11 +9,13 @@ RAP input data: 2024-02-02_18.00.00  (conus only, 3 hours of LBCs)
 
 RAP input data: 2024-08-15_18.00.00  (conus only, 3 hours of LBCs)
 
+Therefore, certain combiniations of configuration options will not work, e.g., global domain with rap source, ncar code with rap source (ncar code doesn't recognize rap projection)
+
 ## Resources needed:
 
-conus: ntasks = 8; time = 10 minutes
+conus: ntasks = 8; time = 6 minutes
 
-global: ntasks = 36; time = 30 minutes
+global: ntasks = 24; time = 30 minutes
 
 ## Configuration options set at the top of the script [options]
 
@@ -27,18 +29,12 @@ global: ntasks = 36; time = 30 minutes
 
 `executable` : path to the init_atmosphere executable 
 
-`yyyy` : year of case [see case availability above]
-
-`mm` : month of case [see case availability above]
-
-`dd` : day of case [see case availability above]
-
-`hh` : hour of case [see case availability above]
-
 `code_base` : code based used to create executable ["ncar","gsl"]
 
 `domain` : spatial extent ["conus","global"]
 
 `source` : input data source ["gfs","rap"]
+
+`season` : for rap source; ignored if gfs source ["summer","winter"]
 
 `use_climo_aerosols` : if "true", add climo aerosols to init and lbc file

@@ -23,13 +23,22 @@ modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="false"
 clean_after="false"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.datestring/"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
-#executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.501dc5e68"
-code_base="ncar"
+#executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
+executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.501dc5e68"
+code_base="gsl"
 domain="conus"
-source="gfs"
+source="rap"
 season="summer"
 use_climo_aerosols="true"
+
+################################################################
+# do some checks
+################################################################
+
+if [ $source = "rap" ] && [ $code_base = "ncar" ]; then 
+  echo "ERROR: NCAR code will not run with RAP input"
+  exit 5
+fi
 
 ################################################################
 # set the date according to the source data
@@ -64,6 +73,7 @@ static_file="mpas."$code_base"."$domain".120km.static.nc"
 init_file="mpas."$code_base"."$domain".120km."$source".init."$datestring".nc"
 lbc_file="mpas."$code_base"."$domain".120km."$source".lbc."$datestring".nc"
 sst_file="mpas."$code_base"."$domain".120km."$source".sfc_update."$datestring".nc"
+ugwp_file="mpas."$code_base"."$domain".120km.ugwp_oro_data.nc"
 script_home=$PWD
 source_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ungrib"
 
@@ -83,8 +93,9 @@ echo "source directory:   $source_directory"
 echo "use_climo_aerosols: $use_climo_aerosols"
 echo "static_file:        $static_file"
 echo "init_file:          $init_file"
-echo "lbc_file:           $lbc_file"
+echo "lbc_file(conus):    $lbc_file"
 echo "sst_file:           $sst_file"
+echo "ugwp_file:          $ugwp_file"
 
 module purge
 module load $modules
@@ -167,7 +178,7 @@ elif [ $domain = "global" ]; then
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
 fi
 
-ln -sf $source_directory/gfs/GFS:2023-03-10_15 .
+ln -sf $source_directory/$source.$yyyy$mm$dd$hh/*$yyyy-$mm-$dd"_"$hh .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step1_static/$static_file .
 
@@ -209,7 +220,7 @@ cp $script_home/case_files/$code_base/$domain/$source.$yyyy$mm$dd$hh/step3_lbc/*
 
 
 ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
-ln -sf $source_directory/gfs/GFS* .
+ln -sf $source_directory/$source.$yyyy$mm$dd$hh/* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/$init_file .
 
@@ -229,8 +240,10 @@ fi  # lbc file exist check
 fi  # domain = conus
 
 ################################################################
-# create sst file 
+# create sst file (only for gfs data)
 ################################################################
+
+if [ $source = "gfs" ]; then 
 
 echo
 echo "################################################################"
@@ -255,7 +268,7 @@ elif [ $domain = "global" ]; then
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
 fi
 
-ln -sf $source_directory/sst/SST* .
+ln -sf $source_directory/sst.$yyyy$mm$dd$hh/SST* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/$init_file .
 
@@ -267,6 +280,8 @@ if [ ! -e $sst_file ]; then
 fi
 
 fi  # sst file exist check
+
+fi  # source = gfs
 
 ################################################################
 # move files to central location
@@ -282,11 +297,16 @@ echo "# Move files to: $final_directory"
 echo "################################################################"
 
 mv ../step1_static/$static_file .
+if [ $code_base = "gsl" ]; then 
+ mv ../step1_static/$ugwp_file .
+fi
 mv ../step2_init/$init_file .
 if [ $domain = "conus" ]; then 
  mv ../step3_lbc/$lbc_file .
 fi
-mv ../step4_sst/$sst_file .
+if [ $source = "gfs" ]; then 
+ mv ../step4_sst/$sst_file .
+fi
 
 echo "These files were created with:" > description
 echo "modules:            $modules" >> description
@@ -306,7 +326,9 @@ if [ $clean_after = "true" ]; then
   if [ $domain = "conus" ]; then 
    rm -Rf ../step3_lbc
   fi
-  rm -Rf ../step4_sst
+  if [ $source = "gfs" ]; then 
+   rm -Rf ../step4_sst
+  fi
   
 fi
 

@@ -1,14 +1,14 @@
 #!/bin/sh -l
 #
 # -- Request n cores
-#SBATCH --ntasks=8
+#SBATCH --ntasks=36
 #
 # -- Specify queue
 #SBATCH -q debug
 #SBATCH --partition=xjet
 #
 # -- Specify a maximum wallclock
-#SBATCH --time=0:10:00
+#SBATCH --time=0:30:00
 #
 # -- Specify under which account a job should run
 #SBATCH --account=gsd-fv3-dev
@@ -21,18 +21,38 @@
 
 modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="false"
-clean_after="true"
+clean_after="false"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase/"
 #executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
 executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.501dc5e68"
-yyyy="2023"
-mm="03"
-dd="10"
-hh="15"
 code_base="gsl"
-domain="conus"
+domain="global"
 source="gfs"
+season="summer"
 use_climo_aerosols="true"
+
+################################################################
+# set the date according to the source data
+################################################################
+
+if [ $source = "gfs" ]; then 
+  yyyy="2023"
+  mm="03"
+  dd="10"
+  hh="15"
+elif [ $source = "rap" ]; then 
+  if [ $season = "summer" ]; then 
+    yyyy="2024"
+    mm="08"
+    dd="15"
+    hh="18"
+  elif [ $season = "winter" ]; then 
+    yyyy="2024"
+    mm="02"
+    dd="02"
+    hh="18"
+  fi
+fi
 
 ################################################################
 # some things that will be re-used

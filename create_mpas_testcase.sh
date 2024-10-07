@@ -23,12 +23,13 @@ modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="false"
 clean_after="true"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase/"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
+#executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
+executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.501dc5e68"
 yyyy="2023"
 mm="03"
 dd="10"
 hh="15"
-code_base="ncar"
+code_base="gsl"
 domain="conus"
 source="gfs"
 use_climo_aerosols="true"
@@ -208,10 +209,8 @@ fi  # lbc file exist check
 fi  # domain = conus
 
 ################################################################
-# create sst file (currently gfs case only)
+# create sst file 
 ################################################################
-
-if [ $source = "gfs" ]; then 
 
 echo
 echo "################################################################"
@@ -248,8 +247,6 @@ if [ ! -e $sst_file ]; then
 fi
 
 fi  # sst file exist check
-
-fi  # source = gfs
 
 ################################################################
 # move files to central location

@@ -8,7 +8,7 @@
 #SBATCH --partition=xjet
 #
 # -- Specify a maximum wallclock
-#SBATCH --time=0:10:00
+#SBATCH --time=0:06:00
 #
 # -- Specify under which account a job should run
 #SBATCH --account=gsd-fv3-dev
@@ -23,12 +23,11 @@ modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="false"
 clean_after="false"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.datestring/"
-#executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.501dc5e68"
-code_base="gsl"
+executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
+code_base="ncar"
 domain="conus"
-source="rap"
-season="summer"
+source="gfs"
+season="winter"
 use_climo_aerosols="true"
 
 ################################################################
@@ -36,8 +35,13 @@ use_climo_aerosols="true"
 ################################################################
 
 if [ $source = "rap" ] && [ $code_base = "ncar" ]; then 
-  echo "ERROR: NCAR code will not run with RAP input"
+  echo "ERROR: NCAR code incompatible with RAP input"
   exit 5
+fi
+
+if [ $source = "rap" ] && [ $domain = "global" ]; then 
+  echo "ERROR: global domain incompatible with RAP input"
+  exit 6
 fi
 
 ################################################################
@@ -95,7 +99,7 @@ echo "static_file:        $static_file"
 echo "init_file:          $init_file"
 echo "lbc_file(conus):    $lbc_file"
 echo "sst_file:           $sst_file"
-echo "ugwp_file:          $ugwp_file"
+echo "ugwp_file(gsl):     $ugwp_file"
 
 module purge
 module load $modules

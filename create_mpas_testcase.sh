@@ -1,14 +1,14 @@
 #!/bin/sh -l
 #
 # -- Request n cores
-#SBATCH --ntasks=36
+#SBATCH --ntasks=8
 #
 # -- Specify queue
 #SBATCH -q debug
 #SBATCH --partition=xjet
 #
 # -- Specify a maximum wallclock
-#SBATCH --time=0:30:00
+#SBATCH --time=0:10:00
 #
 # -- Specify under which account a job should run
 #SBATCH --account=gsd-fv3-dev
@@ -22,11 +22,11 @@
 modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="false"
 clean_after="false"
-case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase/"
-#executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.501dc5e68"
-code_base="gsl"
-domain="global"
+case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.datestring/"
+executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
+#executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.501dc5e68"
+code_base="ncar"
+domain="conus"
 source="gfs"
 season="summer"
 use_climo_aerosols="true"
@@ -119,7 +119,7 @@ echo "$static_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$source/step1_static/* .
+cp $script_home/case_files/$code_base/$domain/$source.$yyyy$mm$dd$hh/step1_static/* .
 
 if [ $domain = "conus" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
@@ -159,7 +159,7 @@ echo "$init_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$source/step2_init/* .
+cp $script_home/case_files/$code_base/$domain/$source.$yyyy$mm$dd$hh/step2_init/* .
 
 if [ $domain = "conus" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
@@ -205,7 +205,7 @@ echo "$lbc_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$source/step3_lbc/* .
+cp $script_home/case_files/$code_base/$domain/$source.$yyyy$mm$dd$hh/step3_lbc/* .
 
 
 ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
@@ -247,7 +247,7 @@ echo "$sst_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$source/step4_sst/* .
+cp $script_home/case_files/$code_base/$domain/$source.$yyyy$mm$dd$hh/step4_sst/* .
 
 if [ $domain = "conus" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .

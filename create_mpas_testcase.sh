@@ -121,7 +121,9 @@ echo "# Start creating: $static_file"
 echo "################################################################"
 
 static_directory=$case_base$case_directory/step1_static
-mkdir -p $static_directory
+if [ ! -d $static_directory ]; then 
+  mkdir -p $static_directory
+fi
 cd $static_directory
 
 if [ -e $static_file ]; then 
@@ -161,7 +163,9 @@ echo "# Start creating: $init_file"
 echo "################################################################"
 
 init_directory=$case_base$case_directory/step2_init
-mkdir -p $init_directory
+if [ ! -d $init_directory ]; then 
+  mkdir -p $init_directory
+fi
 cd $init_directory
 
 if [ -e $init_file ]; then 
@@ -207,7 +211,9 @@ echo "# Start creating: $lbc_file"
 echo "################################################################"
 
 lbc_directory=$case_base$case_directory/step3_lbc
-mkdir -p $lbc_directory
+if [ ! -d $lbc_directory ]; then 
+  mkdir -p $lbc_directory
+fi
 cd $lbc_directory
 
 if [ -e $lbc_file ]; then 
@@ -251,7 +257,9 @@ echo "# Start creating: $sst_file"
 echo "################################################################"
 
 sst_directory=$case_base$case_directory/step4_sst
-mkdir -p $sst_directory
+if [ ! -d $sst_directory ]; then 
+  mkdir -p $sst_directory
+fi
 cd $sst_directory
 
 if [ -e $sst_file ]; then 

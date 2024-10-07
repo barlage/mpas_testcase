@@ -20,9 +20,9 @@
 #SBATCH --chdir=.
 
 modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
-clean_before="false"
-clean_after="false"
-case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.datestring/"
+clean_before="true"
+clean_after="true"
+case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.baselines/"
 executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
 code_base="ncar"
 domain="conus"

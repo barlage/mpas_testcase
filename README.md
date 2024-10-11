@@ -1,5 +1,5 @@
 # create_mpas_testcase
-Environment to create pre-defined MPAS test cases
+Environment to create pre-defined MPAS test cases - only on jet for now
 
 ## Available cases:
 

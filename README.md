@@ -1,5 +1,5 @@
-# create_mpas_testcase
-Environment to create pre-defined MPAS test cases - only on jet for now
+# mpas_testcase
+Environment to create and run pre-defined MPAS test cases - only on jet for now
 
 ## Available cases:
 
@@ -11,13 +11,13 @@ RAP input data: 2024-08-15_18.00.00  (conus only, 3 hours of LBCs)
 
 Therefore, certain combiniations of configuration options will not work, e.g., global domain with rap source, ncar code with rap source (ncar code doesn't recognize rap projection)
 
-## Resources needed:
+## BUILD resources needed:
 
 conus: ntasks = 8; time = 6 minutes
 
 global: ntasks = 24; time = 30 minutes
 
-## Configuration options set at the top of the script [options]
+## BUILD configuration options set at the top of the script [options]
 
 `modules` : modules used to compile init_atmosphere 
 

@@ -23,8 +23,8 @@ modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="true"
 clean_after="true"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.baselines/"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/init_atmosphere_model"
-code_base="ncar"
+executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model"
+code_base="gsl"
 domain="conus"
 source="gfs"
 season="winter"
@@ -110,6 +110,7 @@ module load $modules
 
 if [ $clean_before = "true" ]; then 
   if [ -d $case_base$case_directory ]; then 
+    echo
     echo "directory $case_base$case_directory exists is being removed"
     rm -Rf $case_base$case_directory
   fi
@@ -309,15 +310,19 @@ echo "# Move files to: $final_directory"
 echo "################################################################"
 
 mv ../step1_static/$static_file .
+mv ../step1_static/log* ./log.static
 if [ $code_base = "gsl" ]; then 
  mv ../step1_static/$ugwp_file .
 fi
 mv ../step2_init/$init_file .
+mv ../step2_init/log* ./log.init
 if [ $domain = "conus" ]; then 
  mv ../step3_lbc/$lbc_file .
+ mv ../step3_lbc/log* ./log.lbc
 fi
 if [ $source = "gfs" ]; then 
  mv ../step4_sst/$sst_file .
+ mv ../step4_sst/log* ./log.sst
 fi
 
 echo "These files were created with:" > description

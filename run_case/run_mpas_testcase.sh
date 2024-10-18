@@ -88,7 +88,7 @@ fi
 ################################################################
 
 datestring=$yyyy"-"$mm"-"$dd"_"$hh".00.00"
-init_case_directory=$input_code_base.$domain.$source.$yyyy$mm$dd$hh
+input_case_directory=$input_code_base.$domain.$source.$yyyy$mm$dd$hh
 static_file="mpas."$input_code_base"."$domain".120km.static.nc"
 init_file="mpas."$input_code_base"."$domain".120km."$source".init."$datestring".nc"
 lbc_file="mpas."$input_code_base"."$domain".120km."$source".lbc."$datestring".nc"
@@ -97,7 +97,7 @@ ugwp_file="mpas."$input_code_base"."$domain".120km.ugwp_oro_data.nc"
 script_home=$PWD
 
 if [ $clean_before = "true" ]; then 
-  run_directory=$model_code_base.$physics_suite.$init_case_directory
+  run_directory=$model_code_base.$physics_suite.$input_case_directory
 fi
 
 echo
@@ -109,9 +109,9 @@ echo "modules:            $modules"
 echo "case date:          $datestring"
 echo "executable:         $model_base_directory$model_executable"
 echo "physics suite:      $physics_suite"
-echo "code_base:          $model_code_base"
-echo "domain:             $domain"
-echo "case directory:     $input_case_base$init_case_directory"
+echo "namelist version:   $namelist_version"
+echo "model code name:    $model_code_base"
+echo "case directory:     $input_case_base$input_case_directory"
 
 module purge
 module load $modules
@@ -151,12 +151,12 @@ fi
 
 ln -sf $model_base_directory$model_executable atmosphere_model
 
-ln -sf $input_case_base$init_case_directory/case_files/$init_file mpas.init.nc
+ln -sf $input_case_base$input_case_directory/case_files/$init_file mpas.init.nc
 if [ $domain = "conus" ]; then 
- ln -sf $input_case_base$init_case_directory/case_files/$lbc_file mpas.lbc.nc
+ ln -sf $input_case_base$input_case_directory/case_files/$lbc_file mpas.lbc.nc
 fi
 if [ $source = "gfs" ]; then 
- ln -sf $input_case_base$init_case_directory/case_files/$sst_file mpas.sfc_update.nc
+ ln -sf $input_case_base$input_case_directory/case_files/$sst_file mpas.sfc_update.nc
 fi
 
 cp $script_home/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite/* .

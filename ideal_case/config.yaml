@@ -1,0 +1,61 @@
+# YAML configuration
+account: wrfruc
+verbose: False # Adds extra print statements
+
+# Location for running test cases
+rootdir: /lfs5/BMC/wrfruc/jensen/git-local/runs/
+rundir: mp_2d_mountain
+date_as_dir: True # Use current date and time as directory name: rundir/yyyymmdd_hhmmss
+
+# MPAS runtime files needed
+mpasfiles:
+
+   # Location of compiled MPAS code
+   mpasmodel:
+      action: link # link or copy
+      dir: /lfs5/BMC/wrfruc/jensen/git-local/MPAS-Model-current/
+      files:
+         - init_atmosphere_model
+         - atmosphere_model
+
+   # Location and names of runtime files
+   runtime:
+      action: link # link or copy
+      dir: /lfs5/BMC/wrfruc/jensen/mpas_tables/runtime/
+      files:
+         - RRTMG_SW_DATA.DBL
+         - RRTMG_LW_DATA.DBL
+         - RRTMG_SW_DATA
+         - RRTMG_LW_DATA
+         - LANDUSE.TBL
+         - CCN_ACTIVATE_DATA
+         - QNWFA_QNIFA_SIGMA_MONTHLY.dat
+      
+   # Location of TEMPO MP lookup tables
+   tempo:
+      action: link # link or copy
+      dir: /lfs5/BMC/wrfruc/jensen/mpas_tables/tempo/
+      files:
+         - MP_TEMPO_freezeH2O_DATA.DBL
+         - MP_TEMPO_QRacrQS_DATA.DBL
+         - MP_TEMPO_QIautQS_DATA.DBL
+         - MP_TEMPO_HAILAWARE_QRacrQG_DATA.DBL
+
+   # Case specific grid files, namelists, and streams
+   casefiles:
+      action: copy # link or copy
+      dir: /lfs5/BMC/wrfruc/jensen/git-local/mpas_testcase/ideal_case/case_files/
+      files:
+         - mtn_wave_grid.nc
+         - mtn_wave.graph.info
+         - mtn_wave.graph.info.part.2
+         - mtn_wave.graph.info.part.4
+         - mtn_wave.graph.info.part.6
+         - mtn_wave.graph.info.part.8
+         - namelist.init_atmosphere
+         - namelist.atmosphere
+         - streams.init_atmosphere
+         - streams.atmosphere
+         - stream_list.atmosphere.output
+         - run_init_atmosphere_model.sh
+         - run_atmosphere_model.sh

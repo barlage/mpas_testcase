@@ -3,7 +3,7 @@ account: wrfruc
 verbose: False # Adds extra print statements
 
 # Location for running test cases
-rootdir: /lfs5/BMC/wrfruc/jensen/git-local/runs/
+rootdir: /scratch2/BMC/wrfruc/jensen/git-local/
 rundir: mp_2d_mountain
 date_as_dir: True # Use current date and time as directory name: rundir/yyyymmdd_hhmmss
 
@@ -13,15 +13,17 @@ mpasfiles:
    # Location of compiled MPAS code
    mpasmodel:
       action: link # link or copy
-      dir: /lfs5/BMC/wrfruc/jensen/git-local/MPAS-Model-current/
+      dir: /scratch2/BMC/wrfruc/jensen/git-local/MPAS-Model/
       files:
          - init_atmosphere_model
          - atmosphere_model
 
    # Location and names of runtime files
+   # Most of these files are: MPAS-Model/src/core_atmosphere/physics/physics_wrf/files/
+   # To get the aerosol file use: wget https://www2.mmm.ucar.edu/projects/mpas/QNWFA_QNIFA_SIGMA_MONTHLY.dat
    runtime:
       action: link # link or copy
-      dir: /lfs5/BMC/wrfruc/jensen/mpas_tables/runtime/
+      dir: /scratch2/BMC/wrfruc/jensen/git-local/runtime/
       files:
          - RRTMG_SW_DATA.DBL
          - RRTMG_LW_DATA.DBL
@@ -34,7 +36,7 @@ mpasfiles:
    # Location of TEMPO MP lookup tables
    tempo:
       action: link # link or copy
-      dir: /lfs5/BMC/wrfruc/jensen/mpas_tables/tempo/
+      dir: /scratch2/BMC/wrfruc/jensen/git-local/build_tables/
       files:
          - MP_TEMPO_freezeH2O_DATA.DBL
          - MP_TEMPO_QRacrQS_DATA.DBL
@@ -44,7 +46,7 @@ mpasfiles:
    # Case specific grid files, namelists, and streams
    casefiles:
       action: copy # link or copy
-      dir: /lfs5/BMC/wrfruc/jensen/git-local/mpas_testcase/ideal_case/case_files/
+      dir: /scratch2/BMC/wrfruc/jensen/git-local/mpas_testcase/ideal_case/case_files/
       files:
          - mtn_wave_grid.nc
          - mtn_wave.graph.info

@@ -11,7 +11,6 @@ time_index: 12
 nz: 70
 
 # Variables to plot
-# The order matters since some calculations depend on the environment
 vars:
    dry_air_density:
       shortname: rho

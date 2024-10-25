@@ -15,7 +15,7 @@
         type="output"
         filename_template="output.nc"
         filename_interval="none"
-        output_interval="00:30:00">
+        output_interval="00:05:00">
 
     <file name="stream_list.atmosphere.output"/>
 

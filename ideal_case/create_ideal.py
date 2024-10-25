@@ -99,3 +99,8 @@ sub_job02 = f"sbatch -d afterok:${{runid}} --account={config['account']} run_atm
 fwrite.write(sub_job02)
 fwrite.close()
 
+# Link latest run directory to this folder
+linkrun = pathlib.Path.cwd() / pathlib.Path('latest_run')
+if linkrun.is_symlink(): linkrun.unlink(missing_ok=True)
+linkrun.symlink_to(rundirpath, target_is_directory=True)
+

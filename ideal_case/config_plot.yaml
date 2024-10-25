@@ -1,0 +1,98 @@
+# YAML configuration
+verbose: False # Adds extra print statements
+
+# File information
+plotdir: /scratch2/BMC/wrfruc/jensen/git-local/mpas_testcase/ideal_case/latest_run/
+input: mtn_wave_init.nc
+output: output.nc
+
+# Domain information
+time_index: 12
+nz: 70
+
+# Variables to plot
+# The order matters since some calculations depend on the environment
+vars:
+   dry_air_density:
+      shortname: rho
+      levels: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,1.1,1.2]
+      longname: dry air density
+      label: $\rho_{a}$ [kg m$^{-3}$]
+   pressure:
+      shortname: pressure
+      levels: [300,400,500,600,700,800,900,1000]
+      transform:
+         multiply: 0.01
+      longname: pressure
+      label: Pressure [hPa]
+   potential_temperature:
+      shortname: theta
+      levels: [200,225,250,300,320,350]
+      longname: potential temperature
+      label: $\theta$ [K]
+   temperature:
+      shortname:
+      levels: [-40,-30,-20,-10,0,10,20]
+      transform:
+         convert:
+            function: theta_to_tempc
+            depends:
+               - theta
+               - pressure
+      longname: temperature
+      label: Temperature [$^{o}$C] 
+   water_vapor:
+      shortname: qv
+      levels: [0.01,0.1,0.5,1,2,3,4,5,6,7,8,9,10,11,12]
+      transform:
+         multiply: 1000.0
+      longname: water vapor mixing ratio
+      label: q$_{V}$ [g kg$^{-1}$]     
+   cloud_water:
+      shortname: qc
+      levels: [0.001,0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+      transform:
+         multiply: 1000.0
+         convert:
+            function: mixing_ratio_to_conc
+            depends:
+               - rho
+      longname: cloud water mixing ratio
+      label: q$_{C}$ [g m$^{-3}$]
+   rain_water:
+      shortname: qr
+      levels: [0.001,0.01,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+      transform:
+         multiply: 1000.0
+         convert:
+            function: mixing_ratio_to_conc
+            depends:
+               - rho
+      longname: rain water mixing ratio
+      label: q$_{R}$ [g m$^{-3}$]      
+   cloud_water_num:
+      shortname: nc
+      levels: [0,10,50,100,200,300,400,500,600,700,800,900,1000]
+      transform:
+         multiply: 1.e-6
+         convert:
+            function: mixing_ratio_to_conc
+            depends:
+               - rho
+      mask:
+         qc: 1.e-6
+      longname: cloud water num conc
+      label: n$_{C}$ [cm$^{-3}$]
+   rain_water_num:
+      shortname: nr
+      levels: [0.001,0.01,0.1,1,2,3,4,5,10,50]
+      transform:
+         multiply: 1.e-3
+         convert:
+            function: mixing_ratio_to_conc
+            depends:
+               - rho
+      mask:
+         qr: 1.e-6
+      longname: rain water num conc
+      label: n$_{R}$ [L$^{-1}$]      

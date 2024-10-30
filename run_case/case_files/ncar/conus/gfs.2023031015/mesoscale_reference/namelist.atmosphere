@@ -62,6 +62,15 @@
     config_radtsw_interval = '00:30:00'
     config_bucket_update = 'none'
     config_physics_suite = 'mesoscale_reference'
+!     config_microp_scheme       = mp_wsm6
+!     config_convection_scheme   = cu_ntiedtke
+!     config_pbl_scheme          = bl_mynn
+!     config_gwdo_scheme         = bl_ysu_gwdo
+!     config_radt_cld_scheme     = cld_fraction
+!     config_radt_lw_scheme      = rrtmg_lw
+!     config_radt_sw_scheme      = rrtmg_sw
+!     config_sfclayer_scheme     = sf_monin_obukhov_rev
+!     config_lsm_scheme          = sf_noah
 /
 &soundings
     config_sounding_interval = 'none'

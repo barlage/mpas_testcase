@@ -8,7 +8,7 @@
 #SBATCH --partition=xjet
 #
 # -- Specify a maximum wallclock
-#SBATCH --time=0:01:00
+#SBATCH --time=0:02:00
 #
 # -- Specify under which account a job should run
 #SBATCH --account=gsd-fv3-dev
@@ -26,9 +26,24 @@ clean_before="true"
 # model options
 ################################################################
 
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/"
-model_executable="atmosphere_model.debug_off.41e9a3fb8"
-model_code_base="ncar_v8.2.2"
+#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/"
+#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
+#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/barlage-fork/MPAS-Model/"
+model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/v8.2.2_merge/MPAS-Model/"
+#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/backward/MPAS-Model/"
+#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/registry_test/MPAS-Model/"
+#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/joe-fork/"
+model_executable="atmosphere_model.71791d535"
+#model_executable="atmosphere_model.prepost"
+#model_executable="atmosphere_model"
+#model_executable="atmosphere_model.26783a403"
+#model_executable="atmosphere_model.ea390a0c9"
+#model_executable="atmosphere_model.e09f3048e"
+#model_code_base="dev-ea390a0c9-mesorefmynn"
+#model_code_base="ncar-gslreg-mesorefmynn"
+#model_code_base="mrg-prepost-mesorefmynn"
+#model_code_base="joe-prprepost-mesorefmynn"
+model_code_base="jnt-71791d535-mesoref"
 physics_suite="mesoscale_reference"
 run_directory=""
 namelist_version="ncar"
@@ -38,7 +53,7 @@ namelist_version="ncar"
 ################################################################
 
 input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.baselines/"
-input_code_base="ncar"
+input_code_base="gsl"
 domain="conus"
 source="gfs"
 season="winter"

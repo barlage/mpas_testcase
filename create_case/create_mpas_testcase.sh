@@ -25,6 +25,7 @@ clean_after="true"
 case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.baselines/"
 executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model"
 code_base="gsl"
+namelist="gsl"
 domain="conus"
 resolution="120km"
 source="gfs"
@@ -37,32 +38,48 @@ use_climo_aerosols="true"
 
 valid_combination="false"
 
-if [ $code_base = "ncar" ] && [ $domain = "conus" ] && [ $resolution = "120km" ] && [ $source = "gfs" ]; then 
+if [ $code_base  = "ncar"  ] && [ $namelist = "ncar" ] && [ $domain = "conus" ] && 
+   [ $resolution = "120km" ] && [ $source   = "gfs"  ]; then 
   valid_combination="true"
 fi
 
-if [ $code_base = "ncar" ] && [ $domain = "global" ] && [ $resolution = "120km" ] && [ $source = "gfs" ]; then 
+if [ $code_base  = "ncar"  ] && [ $namelist = "ncar" ] && [ $domain = "global" ] && 
+   [ $resolution = "120km" ] && [ $source   = "gfs"  ]; then 
   valid_combination="true"
 fi
 
-if [ $code_base = "gsl" ] && [ $domain = "conus" ] && [ $resolution = "120km" ] && [ $source = "gfs" ]; then 
+if [ $code_base  = "gsl"   ] && [ $namelist = "ncar" ] && [ $domain = "conus" ] && 
+   [ $resolution = "120km" ] && [ $source   = "gfs"  ]; then 
   valid_combination="true"
 fi
 
-if [ $code_base = "gsl" ] && [ $domain = "global" ] && [ $resolution = "120km" ] && [ $source = "gfs" ]; then 
+if [ $code_base  = "gsl"   ] && [ $namelist = "ncar" ] && [ $domain = "global" ] && 
+   [ $resolution = "120km" ] && [ $source   = "gfs"  ]; then 
   valid_combination="true"
 fi
 
-if [ $code_base = "gsl" ] && [ $domain = "conus" ] && [ $resolution = "120km" ] && [ $source = "rap" ] && [ $season = "summer" ]; then 
+if [ $code_base  = "gsl"   ] && [ $namelist = "gsl" ] && [ $domain = "conus" ] && 
+   [ $resolution = "120km" ] && [ $source   = "gfs" ]; then 
   valid_combination="true"
 fi
 
-if [ $code_base = "gsl" ] && [ $domain = "conus" ] && [ $resolution = "120km" ] && [ $source = "rap" ] && [ $season = "winter" ]; then 
+if [ $code_base  = "gsl"   ] && [ $namelist = "gsl" ] && [ $domain = "global" ] && 
+   [ $resolution = "120km" ] && [ $source   = "gfs" ]; then 
+  valid_combination="true"
+fi
+
+if [ $code_base  = "gsl"   ] && [ $namelist = "gsl" ] && [ $domain = "conus"  ] && 
+   [ $resolution = "120km" ] && [ $source   = "rap" ] && [ $season = "summer" ]; then 
+  valid_combination="true"
+fi
+
+if [ $code_base  = "gsl"   ] && [ $namelist = "gsl" ] && [ $domain = "conus"  ] && 
+   [ $resolution = "120km" ] && [ $source   = "rap" ] && [ $season = "winter" ]; then 
   valid_combination="true"
 fi
 
 if [ $valid_combination = "false" ]; then 
-  echo "ERROR: code/domain/resolution/source = $code_base/$domain/$resolution/$source not supported"
+  echo "ERROR: namelist/domain/resolution/source = $namelist/$domain/$resolution/$source not supported"
   exit 1
 fi
 
@@ -96,12 +113,12 @@ fi
 ################################################################
 
 datestring=$yyyy"-"$mm"-"$dd"_"$hh".00.00"
-case_directory=$code_base.$domain.$resolution.$source.$yyyy$mm$dd$hh
-static_file="mpas.$code_base.$domain.$resolution.static.nc"
-init_file="mpas.$code_base.$domain.$resolution.$source.init.$datestring.nc"
-lbc_file="mpas.$code_base.$domain.$resolution.$source.lbc.$datestring.nc"
-sst_file="mpas.$code_base.$domain.$resolution.$source.sfc_update.$datestring.nc"
-ugwp_file="mpas.$code_base.$domain.$resolution.ugwp_oro_data.nc"
+case_directory=$code_base.$namelist.$domain.$resolution.$source.$yyyy$mm$dd$hh
+static_file="mpas.$code_base.$namelist.$domain.$resolution.static.nc"
+init_file="mpas.$code_base.$namelist.$domain.$resolution.$source.init.$datestring.nc"
+lbc_file="mpas.$code_base.$namelist.$domain.$resolution.$source.lbc.$datestring.nc"
+sst_file="mpas.$code_base.$namelist.$domain.$resolution.$source.sfc_update.$datestring.nc"
+ugwp_file="mpas.$code_base.$namelist.$domain.$resolution.ugwp_oro_data.nc"
 script_home=$PWD
 source_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ungrib"
 
@@ -115,10 +132,11 @@ echo "case date:          $datestring"
 echo "case directory:     $case_base$case_directory"
 echo "executable:         $executable"
 echo "code_base:          $code_base"
+echo "namelist:           $namelist"
 echo "domain:             $domain"
+echo "resolution:         $resolution"
 echo "input source:       $source"
 echo "source directory:   $source_directory"
-echo "resolution:         $resolution"
 echo "use_climo_aerosols: $use_climo_aerosols"
 echo "static_file:        $static_file"
 echo "init_file:          $init_file"
@@ -162,7 +180,7 @@ echo "$static_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$resolution/$source.$yyyy$mm$dd$hh/step1_static/* .
+cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step1_static/* .
 
 if [ $domain = "conus" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
@@ -178,7 +196,7 @@ time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
 if [ ! -e $static_file ]; then 
   echo "ERROR: $static_file was not created"
-  exit 1
+  exit 2
 fi
 
 fi  # static file exist check
@@ -204,7 +222,7 @@ echo "$init_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$resolution/$source.$yyyy$mm$dd$hh/step2_init/* .
+cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step2_init/* .
 
 if [ $domain = "conus" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
@@ -224,7 +242,7 @@ time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
 if [ ! -e $init_file ]; then 
   echo "ERROR: $init_file was not created"
-  exit 2
+  exit 3
 fi
 
 fi  # init file exist check
@@ -252,7 +270,7 @@ echo "$lbc_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$resolution/$source.$yyyy$mm$dd$hh/step3_lbc/* .
+cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step3_lbc/* .
 
 
 ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
@@ -268,7 +286,7 @@ time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
 if [ ! -e $lbc_file ]; then 
   echo "ERROR: $lbc_file was not created"
-  exit 3
+  exit 4
 fi
 
 fi  # lbc file exist check
@@ -298,7 +316,7 @@ echo "$sst_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$code_base/$domain/$resolution/$source.$yyyy$mm$dd$hh/step4_sst/* .
+cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step4_sst/* .
 
 if [ $domain = "conus" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
@@ -314,7 +332,7 @@ time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
 if [ ! -e $sst_file ]; then 
   echo "ERROR: $sst_file was not created"
-  exit 4
+  exit 5
 fi
 
 fi  # sst file exist check
@@ -336,7 +354,7 @@ echo "################################################################"
 
 mv ../step1_static/$static_file .
 mv ../step1_static/log* ./log.static
-if [ $code_base = "gsl" ]; then 
+if [ $namelist = "gsl" ]; then 
  mv ../step1_static/$ugwp_file .
 fi
 mv ../step2_init/$init_file .
@@ -376,7 +394,7 @@ fi
 
 echo
 echo "################################################################"
-echo "# Successful completion of case: $code_base.$domain.$source.$yyyy$mm$dd$hh"
+echo "# Successful completion of case: $code_base.$namelist.$domain.$resolution.$source.$yyyy$mm$dd$hh"
 echo "################################################################"
 
 

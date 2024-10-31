@@ -183,11 +183,11 @@ else
 cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step1_static/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.grid.nc .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.grid.nc .
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.grid.nc global.120km.grid.nc
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.$resolution.graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.grid.nc global.$resolution.grid.nc
 fi
 
 ln -sf $executable init_atmosphere_model
@@ -225,9 +225,9 @@ else
 cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step2_init/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.$resolution.graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $source_directory/$source.$yyyy$mm$dd$hh/*$yyyy-$mm-$dd"_"$hh .
@@ -273,7 +273,7 @@ else
 cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step3_lbc/* .
 
 
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
+ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
 ln -sf $source_directory/$source.$yyyy$mm$dd$hh/* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/$init_file .
@@ -319,9 +319,9 @@ else
 cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step4_sst/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.$resolution.graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $source_directory/sst.$yyyy$mm$dd$hh/SST* .

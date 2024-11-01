@@ -180,22 +180,22 @@ echo "$static_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step1_static/* .
+cp $script_home/case_files/$namelist/step1_static/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.grid.nc .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.grid.nc grid.nc
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.$resolution.graph.info.part.$SLURM_NTASKS
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.grid.nc global.$resolution.grid.nc
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.grid.nc grid.nc
 fi
 
 ln -sf $executable init_atmosphere_model
 
 time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
-if [ ! -e $static_file ]; then 
-  echo "ERROR: $static_file was not created"
+if [ ! -e static.nc ]; then 
+  echo "ERROR: static.nc was not created"
   exit 2
 fi
 
@@ -222,17 +222,17 @@ echo "$init_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step2_init/* .
+cp $script_home/case_files/$namelist/step2_init/$source.$yyyy$mm$dd$hh/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.$resolution.graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $source_directory/$source.$yyyy$mm$dd$hh/*$yyyy-$mm-$dd"_"$hh .
 ln -sf $executable init_atmosphere_model
-ln -sf ../step1_static/$static_file .
+ln -sf ../step1_static/static.nc .
 
 if [ $use_climo_aerosols = "true" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/aerosols/QNWFA_QNIFA_SIGMA_MONTHLY.dat .
@@ -240,8 +240,8 @@ fi
 
 time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
-if [ ! -e $init_file ]; then 
-  echo "ERROR: $init_file was not created"
+if [ ! -e init.nc ]; then 
+  echo "ERROR: init.nc was not created"
   exit 3
 fi
 
@@ -270,13 +270,13 @@ echo "$lbc_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step3_lbc/* .
+cp $script_home/case_files/$namelist/step3_lbc/$source.$yyyy$mm$dd$hh/* .
 
 
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
+ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 ln -sf $source_directory/$source.$yyyy$mm$dd$hh/* .
 ln -sf $executable init_atmosphere_model
-ln -sf ../step2_init/$init_file .
+ln -sf ../step2_init/init.nc .
 
 if [ $use_climo_aerosols = "true" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/aerosols/QNWFA_QNIFA_SIGMA_MONTHLY.dat .
@@ -284,8 +284,8 @@ fi
 
 time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
-if [ ! -e $lbc_file ]; then 
-  echo "ERROR: $lbc_file was not created"
+if [ ! -e lbc.nc ]; then 
+  echo "ERROR: lbc.nc was not created"
   exit 4
 fi
 
@@ -316,22 +316,22 @@ echo "$sst_file already exists so moving on to next step"
 
 else
 
-cp $script_home/case_files/$namelist/$domain/$resolution/$source.$yyyy$mm$dd$hh/step4_sst/* .
+cp $script_home/case_files/$namelist/step4_sst/$source.$yyyy$mm$dd$hh/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.$resolution.graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $source_directory/sst.$yyyy$mm$dd$hh/SST* .
 ln -sf $executable init_atmosphere_model
-ln -sf ../step2_init/$init_file .
+ln -sf ../step2_init/init.nc .
 
 time srun -n $SLURM_NTASKS ./init_atmosphere_model
 
-if [ ! -e $sst_file ]; then 
-  echo "ERROR: $sst_file was not created"
+if [ ! -e sfc_update.nc ]; then 
+  echo "ERROR: sfc_update was not created"
   exit 5
 fi
 
@@ -352,19 +352,19 @@ echo "################################################################"
 echo "# Move files to: $final_directory"
 echo "################################################################"
 
-mv ../step1_static/$static_file .
+mv ../step1_static/static.nc $static_file
 mv ../step1_static/log* ./log.static
 if [ $namelist = "gsl" ]; then 
- mv ../step1_static/$ugwp_file .
+ mv ../step1_static/ugwp.nc $ugwp_file
 fi
-mv ../step2_init/$init_file .
+mv ../step2_init/init.nc $init_file
 mv ../step2_init/log* ./log.init
 if [ $domain = "conus" ]; then 
- mv ../step3_lbc/$lbc_file .
+ mv ../step3_lbc/lbc.nc $lbc_file
  mv ../step3_lbc/log* ./log.lbc
 fi
 if [ $source = "gfs" ]; then 
- mv ../step4_sst/$sst_file .
+ mv ../step4_sst/sfc_update.nc $sst_file
  mv ../step4_sst/log* ./log.sst
 fi
 

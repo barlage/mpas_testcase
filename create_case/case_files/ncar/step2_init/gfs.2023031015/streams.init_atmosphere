@@ -2,12 +2,12 @@
 <immutable_stream name="input"
                   type="input"
                   precision="single"
-                  filename_template="global.120km.grid.nc"
+                  filename_template="static.nc"
                   input_interval="initial_only" />
 
 <immutable_stream name="output"
                   type="output"
-                  filename_template="mpas.ncar.global.120km.static.nc"
+                  filename_template="init.nc"
                   packages="initial_conds"
                   output_interval="initial_only" />
 

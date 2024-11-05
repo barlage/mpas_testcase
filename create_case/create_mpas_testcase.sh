@@ -355,7 +355,7 @@ echo "################################################################"
 mv ../step1_static/static.nc $static_file
 mv ../step1_static/log* ./log.static
 if [ $namelist = "gsl" ]; then 
- mv ../step1_static/ugwp.nc $ugwp_file
+ mv ../step1_static/ugwp_oro_data.nc $ugwp_file
 fi
 mv ../step2_init/init.nc $init_file
 mv ../step2_init/log* ./log.init

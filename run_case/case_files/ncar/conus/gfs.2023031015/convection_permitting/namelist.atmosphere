@@ -61,7 +61,7 @@
     config_radtlw_interval = '00:30:00'
     config_radtsw_interval = '00:30:00'
     config_bucket_update = 'none'
-    config_physics_suite = 'mesoscale_reference'
+    config_physics_suite = 'convection_permitting'
 /
 &soundings
     config_sounding_interval = 'none'

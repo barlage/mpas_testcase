@@ -26,24 +26,9 @@ clean_before="true"
 # model options
 ################################################################
 
-#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/"
-#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
-#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/barlage-fork/MPAS-Model/"
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/v8.2.2_merge/MPAS-Model/"
-#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/backward/MPAS-Model/"
-#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/registry_test/MPAS-Model/"
-#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/joe-fork/"
-model_executable="atmosphere_model.71791d535"
-#model_executable="atmosphere_model.prepost"
-#model_executable="atmosphere_model"
-#model_executable="atmosphere_model.26783a403"
-#model_executable="atmosphere_model.ea390a0c9"
-#model_executable="atmosphere_model.e09f3048e"
-#model_code_base="dev-ea390a0c9-mesorefmynn"
-#model_code_base="ncar-gslreg-mesorefmynn"
-#model_code_base="mrg-prepost-mesorefmynn"
-#model_code_base="joe-prprepost-mesorefmynn"
-model_code_base="jnt-71791d535-mesoref"
+model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-base/v8.2.2/"
+model_executable="atmosphere_model"
+model_code_base=""
 physics_suite="mesoscale_reference"
 run_directory=""
 namelist_version="ncar"
@@ -53,10 +38,12 @@ namelist_version="ncar"
 ################################################################
 
 input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testcase.baselines/"
-input_code_base="gsl"
+input_code_base="ncar"
+input_namelist="ncar"
+resolution="120km"
 domain="conus"
 source="gfs"
-season="winter"
+season="summer"
 
 
 ################################################################
@@ -103,12 +90,12 @@ fi
 ################################################################
 
 datestring=$yyyy"-"$mm"-"$dd"_"$hh".00.00"
-input_case_directory=$input_code_base.$domain.$source.$yyyy$mm$dd$hh
-static_file="mpas."$input_code_base"."$domain".120km.static.nc"
-init_file="mpas."$input_code_base"."$domain".120km."$source".init."$datestring".nc"
-lbc_file="mpas."$input_code_base"."$domain".120km."$source".lbc."$datestring".nc"
-sst_file="mpas."$input_code_base"."$domain".120km."$source".sfc_update."$datestring".nc"
-ugwp_file="mpas."$input_code_base"."$domain".120km.ugwp_oro_data.nc"
+input_case_directory=$input_code_base.$input_namelist.$domain.$resolution.$source.$yyyy$mm$dd$hh
+static_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.static.nc"
+init_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.$source.init.$datestring.nc"
+lbc_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.$source.lbc.$datestring.nc"
+sst_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.$source.sfc_update.$datestring.nc"
+ugwp_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.ugwp_oro_data.nc"
 script_home=$PWD
 
 if [ $clean_before = "true" ]; then 
@@ -159,9 +146,9 @@ cp $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*DATA .
 cp $model_base_directory/src/core_atmosphere/physics/physics_noahmp/parameters/NoahmpTable.TBL .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.120km.graph.info.part.$SLURM_NTASKS .
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/120km/grid/x1.40962.graph.info.part.$SLURM_NTASKS global.120km.graph.info.part.$SLURM_NTASKS
+  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $model_base_directory$model_executable atmosphere_model
@@ -172,6 +159,15 @@ if [ $domain = "conus" ]; then
 fi
 if [ $source = "gfs" ]; then 
  ln -sf $input_case_base$input_case_directory/case_files/$sst_file mpas.sfc_update.nc
+fi
+if [ $namelist_version = "gsl" ]; then 
+ ln -sf $input_case_base$input_case_directory/case_files/$ugwp_file mpas.ugwp_oro_data.nc
+fi
+if [ $physics_suite = "hrrrv5" ]; then 
+ ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/microphysics/tables_tempo/* .
+fi
+if [ $physics_suite = "convection_permitting" ]; then 
+ ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/microphysics/tables_thompson/* .
 fi
 
 cp $script_home/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite/* .
@@ -186,7 +182,7 @@ time srun -n $SLURM_NTASKS ./atmosphere_model
 
 #echo
 #echo "################################################################"
-#echo "# Successful completion of case: $code_base.$domain.$source.$yyyy$mm$dd$hh"
+#echo "# Successful completion of case: $model_code_base.$physics_suite.$input_case_directory"
 #echo "################################################################"
 
 

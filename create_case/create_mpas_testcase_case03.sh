@@ -4,7 +4,7 @@
 #SBATCH --ntasks=8
 #
 # -- Specify queue
-#SBATCH -q debug
+#SBATCH -q batch
 #SBATCH --partition=xjet
 #
 # -- Specify a maximum wallclock
@@ -22,9 +22,9 @@
 modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="true"
 clean_after="true"
-case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-41e9a3fb8/"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-mpi/v8.2.2/init_atmosphere_model.41e9a3fb8"
-code_base="ncar"
+case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-df234a689/"
+executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.df234a689"
+code_base="gsl"
 namelist="ncar"
 domain="conus"
 resolution="120km"
@@ -158,6 +158,11 @@ if [ $clean_before = "true" ]; then
     rm -Rf $case_base$case_directory
   fi
 fi
+
+echo
+echo "################################################################"
+echo "Start processing time:" `date`
+echo "################################################################"
 
 ################################################################
 # create static file
@@ -397,4 +402,7 @@ echo "################################################################"
 echo "# Successful completion of case: $code_base.$namelist.$domain.$resolution.$source.$yyyy$mm$dd$hh"
 echo "################################################################"
 
-
+echo
+echo "################################################################"
+echo "End processing time:" `date`
+echo "################################################################"

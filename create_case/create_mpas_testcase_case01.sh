@@ -4,7 +4,7 @@
 #SBATCH --ntasks=8
 #
 # -- Specify queue
-#SBATCH -q debug
+#SBATCH -q batch
 #SBATCH --partition=xjet
 #
 # -- Specify a maximum wallclock
@@ -158,6 +158,11 @@ if [ $clean_before = "true" ]; then
     rm -Rf $case_base$case_directory
   fi
 fi
+
+echo
+echo "################################################################"
+echo "Start processing time:" `date`
+echo "################################################################"
 
 ################################################################
 # create static file
@@ -397,4 +402,7 @@ echo "################################################################"
 echo "# Successful completion of case: $code_base.$namelist.$domain.$resolution.$source.$yyyy$mm$dd$hh"
 echo "################################################################"
 
-
+echo
+echo "################################################################"
+echo "End processing time:" `date`
+echo "################################################################"

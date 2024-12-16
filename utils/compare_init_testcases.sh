@@ -7,10 +7,10 @@ gsl_hash_baseline="26ef9904f"
 ncar_hash_baseline="41e9a3fb8"
 
 # compile flag used
-# use "-gsltest" for intel-mpi-gsltest
-# use "" for intel-mpi
+# use "-gsltest"  for intel-mpi-gsltest
+# use "-intelmpi" for intel-mpi
 
-compile_flag=""
+compile_flag="-gsltest"
 
 gsl_test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 gsl_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
@@ -164,6 +164,11 @@ echo "  === $file comparison" >> $fileout
 nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
+file="mpas.gsl.gsl.conus.120km.ugwp_oro_data.nc"
+echo "  === $file comparison excluding xtime" >> $fileout
+nccmp -x xtime -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
 echo >> $fileout
 echo "######################################################################" >> $fileout
 echo "# compare GSL code, GSL namelist, GFS source, GLOBAL domain           " >> $fileout
@@ -186,6 +191,11 @@ echo >> $fileout
 file="mpas.gsl.gsl.global.120km.gfs.sfc_update.2023-03-10_15.00.00.nc"
 echo "  === $file comparison" >> $fileout
 nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+file="mpas.gsl.gsl.global.120km.ugwp_oro_data.nc"
+echo "  === $file comparison excluding xtime" >> $fileout
+nccmp -x xtime -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
 echo >> $fileout
@@ -212,6 +222,11 @@ echo "  === $file comparison" >> $fileout
 nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
+file="mpas.gsl.gsl.conus.120km.ugwp_oro_data.nc"
+echo "  === $file comparison excluding xtime" >> $fileout
+nccmp -x xtime -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
 echo >> $fileout
 echo "######################################################################" >> $fileout
 echo "# compare GSL code, GSL namelist, RAP summer source, CONUS domain     " >> $fileout
@@ -234,5 +249,10 @@ echo >> $fileout
 file="mpas.gsl.gsl.conus.120km.rap.lbc.2024-08-15_18.00.00.nc"
 echo "  === $file comparison" >> $fileout
 nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+file="mpas.gsl.gsl.conus.120km.ugwp_oro_data.nc"
+echo "  === $file comparison excluding xtime" >> $fileout
+nccmp -x xtime -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 

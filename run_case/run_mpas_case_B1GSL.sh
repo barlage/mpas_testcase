@@ -26,10 +26,10 @@ clean_before="true"
 # model options
 ################################################################
 
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-mpi/v8.2.2/"
-model_executable="atmosphere_model"
-model_code_base=""
-physics_suite="mesoscale_reference"
+model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
+model_executable="atmosphere_model.26ef9904f.intelmpi"
+model_code_base="gsl-26ef9904f-intelmpi"
+physics_suite="convection_permitting"
 run_directory=""
 namelist_version="ncar"
 

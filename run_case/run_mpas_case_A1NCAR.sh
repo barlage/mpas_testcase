@@ -27,8 +27,8 @@ clean_before="true"
 ################################################################
 
 model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-mpi/v8.2.2/"
-model_executable="atmosphere_model"
-model_code_base=""
+model_executable="atmosphere_model.41e9a3fb8.debug"
+model_code_base="ncar-v8.2.2-debug"
 physics_suite="mesoscale_reference"
 run_directory=""
 namelist_version="ncar"

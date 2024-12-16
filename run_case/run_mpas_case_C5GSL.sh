@@ -26,20 +26,20 @@ clean_before="true"
 # model options
 ################################################################
 
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-mpi/v8.2.2/"
-model_executable="atmosphere_model"
-model_code_base=""
-physics_suite="mesoscale_reference"
+model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
+model_executable="atmosphere_model.26ef9904f.debug"
+model_code_base="gsl-26ef9904f-debug"
+physics_suite="hrrrv5"
 run_directory=""
-namelist_version="ncar"
+namelist_version="gsl"
 
 ################################################################
 # input file options
 ################################################################
 
-input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-41e9a3fb8-intelmpi/"
-input_code_base="ncar"
-input_namelist="ncar"
+input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-26ef9904f-intelmpi/"
+input_code_base="gsl"
+input_namelist="gsl"
 resolution="120km"
 domain="conus"
 source="gfs"

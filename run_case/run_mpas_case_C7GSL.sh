@@ -27,8 +27,8 @@ clean_before="true"
 ################################################################
 
 model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
-model_executable="atmosphere_model.26ef9904f.debug"
-model_code_base="gsl-26ef9904f-debug"
+model_executable="atmosphere_model.df234a689.debug"
+model_code_base="gsl-df234a689-debug"
 physics_suite="hrrrv5"
 run_directory=""
 namelist_version="gsl"

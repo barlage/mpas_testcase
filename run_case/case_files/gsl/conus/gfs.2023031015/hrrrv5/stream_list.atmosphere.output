@@ -41,6 +41,7 @@ fzp
 zz
 initial_time
 xtime
+Time
 u
 w
 pressure
@@ -58,6 +59,7 @@ u_pv
 v_pv
 theta_pv
 vort_pv
+iLev_DT
 depv_dt_lw
 depv_dt_sw
 depv_dt_bl
@@ -69,7 +71,6 @@ depv_dt_diab
 depv_dt_fric
 depv_dt_diab_pv
 depv_dt_fric_pv
-iLev_DT
 i_rainnc
 rainnc
 precipw
@@ -104,7 +105,23 @@ snow
 snowh
 sst
 vegfra
+shdmin
+shdmax
+canwat
 xice
 sh2o
 smois
 tslb
+soilt1
+rhosnf
+snowfallac
+acrunoff
+grdflx
+ivgtyp
+isltyp
+lai
+sfc_albedo
+cldfrac_bl
+snowc
+snownc
+graupelnc

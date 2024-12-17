@@ -140,10 +140,10 @@ echo "################################################################"
 echo "# Start setting up case directory"
 echo "################################################################"
 
-cp $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*.TBL .
-cp $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*.DBL .
-cp $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*DATA .
-cp $model_base_directory/src/core_atmosphere/physics/physics_noahmp/parameters/NoahmpTable.TBL .
+ln -sf $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*.TBL .
+ln -sf $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*.DBL .
+ln -sf $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*DATA .
+ln -sf $model_base_directory/src/core_atmosphere/physics/physics_noahmp/parameters/NoahmpTable.TBL .
 
 if [ $domain = "conus" ]; then 
   ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS

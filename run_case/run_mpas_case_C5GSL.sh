@@ -26,9 +26,9 @@ clean_before="true"
 # model options
 ################################################################
 
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
-model_executable="atmosphere_model.df234a689.debug"
-model_code_base="gsl-df234a689-debug"
+model_base_directory=$1
+model_executable=$2
+model_code_base=$3
 physics_suite="hrrrv5"
 run_directory=""
 namelist_version="gsl"
@@ -37,7 +37,7 @@ namelist_version="gsl"
 # input file options
 ################################################################
 
-input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-26ef9904f-intelmpi/"
+input_case_base=$4
 input_code_base="gsl"
 input_namelist="gsl"
 resolution="120km"

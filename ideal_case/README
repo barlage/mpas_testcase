@@ -1,0 +1,14 @@
+Step 1:
+  Install the conda environment in conda_env/mpas_testing.yaml
+  Use this command to install: conda env create -f mpas_testing.yaml
+    or
+  Install a recent verion of python 3 and pyyaml
+
+Step 2:
+  Modify config.yaml
+
+Step 3:
+  Run create_idea.py
+
+Step 4:
+  Change to case directory and run `bash run.sh`

@@ -16,11 +16,7 @@
 #   5. change ncar_input_case_base to the location of the ncar case input data (shouldn't change often)
 #   6. run the script: sh run_mpas_GSL_cases.sh
 
-##############################
-# options that change often
-##############################
-
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/"
+model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
 model_executable="atmosphere_model.df234a689.intdebug"
 model_code_base="gsl-df234a689-intdebug"
 gsl_input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-df234a689-intelmpi/"

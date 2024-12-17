@@ -20,7 +20,7 @@
 test_repo_name="joe"             # repository name
 test_hash_to_compare="6b9226531" # 9-digit git hash
 test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/mpas_testcase/run_case/"
-gsl_hash_baseline="26ef9904f" # 9-digit git hash
+gsl_hash_baseline="df234a689" # 9-digit git hash
 
 
 #####################################
@@ -36,9 +36,9 @@ ncar_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/ru
 # compile flag used
 # use "-gsltest"  for intel-mpi-gsltest
 # use "-intelmpi" for intel-mpi
-# use "-debug"    for intel-mpi + debug
+# use "-intdebug" for intel-mpi + debug
 
-compile_flag="-debug"
+compile_flag="-intdebug"
 
 ######################################################################
 # shouldn't need to change anything below

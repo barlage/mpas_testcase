@@ -20,7 +20,7 @@
 test_repo_name="gsl"             # repository name
 test_hash_to_compare="df234a689" # 9-digit git hash
 test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
-gsl_hash_baseline="26ef9904f" # 9-digit git hash
+gsl_hash_baseline="26ef9904f"    # 9-digit git hash
 
 
 #####################################

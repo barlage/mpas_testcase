@@ -22,8 +22,8 @@
 modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="true"
 clean_after="true"
-case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-df234a689-intelmpi/"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.df234a689.intelmpi"
+case_base=$1
+executable=$2
 code_base="gsl"
 namelist="ncar"
 domain="conus"

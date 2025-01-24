@@ -3,24 +3,24 @@
 # simple script to compare create test cases and produce a report file
 #
 # when you created the test cases, you chose a "model_code_base" in the format (using names referenced below):
-#    test_repo_name - test_hash_to_compare - compile_flag
+#    test_repo_name - version_to_compare - compile_flag
 #
 # Steps:
 #   1. module load nccmp
 #   2. change test_repo_name to your repository name
-#   3. change test_hash_to_compare to the hash of your test repository
+#   3. change version_to_compare to the version of your test repository
 #   4. change test_directory to the location of your test case output
-#   5. change gsl_hash_baseline to the gsl fork hash that you want to compare to, for PRs should be top of develop branch
+#   5. change gsl_version_baseline to the gsl fork version that you want to compare to, for PRs should be top of develop branch
 #   6. run the script: sh compare_create_testcases.sh
 
 ##############################
 # options that change often
 ##############################
 
-test_repo_name="gsl"             # repository name
-test_hash_to_compare="df234a689" # 9-digit git hash
 test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
-gsl_hash_baseline="26ef9904f"    # 9-digit git hash
+test_repo_name="gsl"                 # repository name
+version_to_compare="v8.2.2-1.1"      # GSL version proposed for this PR
+gsl_version_baseline="v8.2.2-1.0"    # GSL version of current develop
 
 
 #####################################
@@ -28,7 +28,7 @@ gsl_hash_baseline="26ef9904f"    # 9-digit git hash
 #  no need to change unless ncar baseline changes or baseline directories changes or compile flag changes
 #####################################
 
-ncar_hash_baseline="41e9a3fb8" # 9-digit git hash
+ncar_version_baseline="v8.2.2" # NCAR version
 
 gsl_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 ncar_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
@@ -37,18 +37,18 @@ ncar_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/cr
 # use "-gsltest"  for intel-mpi-gsltest
 # use "-intelmpi" for intel-mpi
 
-compile_flag="-gsltest"
+compile_flag="-intelmpi"
 
 ######################################################################
 # shouldn't need to change anything below
 ######################################################################
 
-fileout="compare_create_testcases_$test_hash_to_compare$compile_flag"
+fileout="compare_create_testcases_$version_to_compare$compile_flag"
 
 echo "" > $fileout
-echo "   test_hash_to_compare = $test_hash_to_compare" >> $fileout
-echo "      gsl_hash_baseline = $gsl_hash_baseline" >> $fileout
-echo "     ncar_hash_baseline = $ncar_hash_baseline" >> $fileout
+echo "     version_to_compare = $version_to_compare" >> $fileout
+echo "   gsl_version_baseline = $gsl_version_baseline" >> $fileout
+echo "  ncar_version_baseline = $ncar_version_baseline" >> $fileout
 echo "         test_directory = $test_directory" >> $fileout
 echo " gsl_baseline_directory = $gsl_baseline_directory" >> $fileout
 echo "ncar_baseline_directory = $ncar_baseline_directory" >> $fileout
@@ -61,8 +61,20 @@ echo "# compare to NCAR CONUS baselines                                     " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.ncar.conus.120km.gfs.2023031015/case_files/"
-dir2=$ncar_baseline_directory"ncar-$ncar_hash_baseline$compile_flag/ncar.ncar.conus.120km.gfs.2023031015/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.ncar.conus.120km.gfs.2023031015/case_files/"
+dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag/ncar.ncar.conus.120km.gfs.2023031015/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.ncar.conus.120km.static.nc"
 filencar="mpas.ncar.ncar.conus.120km.static.nc"
@@ -93,8 +105,20 @@ echo "# compare to NCAR GLOBAL baselines                                    " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.ncar.global.120km.gfs.2023031015/case_files/"
-dir2=$ncar_baseline_directory"ncar-$ncar_hash_baseline$compile_flag/ncar.ncar.global.120km.gfs.2023031015/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.ncar.global.120km.gfs.2023031015/case_files/"
+dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag/ncar.ncar.global.120km.gfs.2023031015/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.ncar.global.120km.static.nc"
 filencar="mpas.ncar.ncar.global.120km.static.nc"
@@ -119,8 +143,20 @@ echo "# compare GSL code, NCAR namelist, GFS source, CONUS domain           " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.ncar.conus.120km.gfs.2023031015/case_files/"
-dir2=$gsl_baseline_directory"gsl-$gsl_hash_baseline$compile_flag/gsl.ncar.conus.120km.gfs.2023031015/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.ncar.conus.120km.gfs.2023031015/case_files/"
+dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag/gsl.ncar.conus.120km.gfs.2023031015/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.ncar.conus.120km.static.nc"
 echo "  === $file comparison" >> $fileout
@@ -148,8 +184,20 @@ echo "# compare GSL code, NCAR namelist, GFS source, GLOBAL domain          " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.ncar.global.120km.gfs.2023031015/case_files/"
-dir2=$gsl_baseline_directory"gsl-$gsl_hash_baseline$compile_flag/gsl.ncar.global.120km.gfs.2023031015/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.ncar.global.120km.gfs.2023031015/case_files/"
+dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag/gsl.ncar.global.120km.gfs.2023031015/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.ncar.global.120km.static.nc"
 echo "  === $file comparison" >> $fileout
@@ -172,8 +220,20 @@ echo "# compare GSL code, GSL namelist, GFS source, CONUS domain            " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.gsl.conus.120km.gfs.2023031015/case_files/"
-dir2=$gsl_baseline_directory"gsl-$gsl_hash_baseline$compile_flag/gsl.gsl.conus.120km.gfs.2023031015/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.gsl.conus.120km.gfs.2023031015/case_files/"
+dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag/gsl.gsl.conus.120km.gfs.2023031015/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.gsl.conus.120km.static.nc"
 echo "  === $file comparison" >> $fileout
@@ -206,8 +266,20 @@ echo "# compare GSL code, GSL namelist, GFS source, GLOBAL domain           " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.gsl.global.120km.gfs.2023031015/case_files/"
-dir2=$gsl_baseline_directory"gsl-$gsl_hash_baseline$compile_flag/gsl.gsl.global.120km.gfs.2023031015/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.gsl.global.120km.gfs.2023031015/case_files/"
+dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag/gsl.gsl.global.120km.gfs.2023031015/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.gsl.global.120km.static.nc"
 echo "  === $file comparison" >> $fileout
@@ -235,8 +307,20 @@ echo "# compare GSL code, GSL namelist, RAP winter source, CONUS domain     " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.gsl.conus.120km.rap.2024020218/case_files/"
-dir2=$gsl_baseline_directory"gsl-$gsl_hash_baseline$compile_flag/gsl.gsl.conus.120km.rap.2024020218/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.gsl.conus.120km.rap.2024020218/case_files/"
+dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag/gsl.gsl.conus.120km.rap.2024020218/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.gsl.conus.120km.static.nc"
 echo "  === $file comparison" >> $fileout
@@ -264,8 +348,20 @@ echo "# compare GSL code, GSL namelist, RAP summer source, CONUS domain     " >>
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$test_hash_to_compare$compile_flag/gsl.gsl.conus.120km.rap.2024081518/case_files/"
-dir2=$gsl_baseline_directory"gsl-$gsl_hash_baseline$compile_flag/gsl.gsl.conus.120km.rap.2024081518/case_files/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag/gsl.gsl.conus.120km.rap.2024081518/case_files/"
+dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag/gsl.gsl.conus.120km.rap.2024081518/case_files/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
 file="mpas.gsl.gsl.conus.120km.static.nc"
 echo "  === $file comparison" >> $fileout

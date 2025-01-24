@@ -26,10 +26,13 @@ clean_before="true"
 # model options
 ################################################################
 
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-mpi/v8.2.2/"
+model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/barlage-fork/MPAS-Model/"
 model_executable="atmosphere_model"
-model_code_base=""
-physics_suite="mesoscale_reference"
+model_code_base="bar-test-intdebug"
+#model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/intel-mpi/v8.2.2/"
+#model_executable="atmosphere_model"
+#model_code_base="ncar-print"
+physics_suite="mesoscale_reference_noahmp"
 run_directory=""
 namelist_version="ncar"
 

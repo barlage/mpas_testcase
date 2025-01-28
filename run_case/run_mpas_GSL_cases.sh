@@ -16,9 +16,9 @@
 #   6. run the script: sh run_mpas_GSL_cases.sh
 
 model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
-model_executable="atmosphere_model.v8.2.2-1.1.intdebug"
-model_code_base="gsl-v8.2.2-1.1-intdebug"
-gsl_input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-v8.2.2-1.0-intelmpi/"
+model_executable="atmosphere_model.v8.2.2-2.0.intdebug"
+model_code_base="gsl-v8.2.2-2.0-intdebug"
+gsl_input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-v8.2.2-2.0-intelmpi/"
 ncar_input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-v8.2.2-intelmpi/"
 
 sbatch run_mpas_case_A1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base

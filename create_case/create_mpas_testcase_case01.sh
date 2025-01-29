@@ -1,18 +1,5 @@
 #!/bin/sh -l
 #
-# -- Request nodes and tasks
-#SBATCH --ntasks=8
-#
-# -- Specify queue
-#SBATCH -q batch
-#SBATCH --partition=xjet
-#
-# -- Specify a maximum wallclock
-#SBATCH --time=0:10:00
-#
-# -- Specify under which account a job should run
-#SBATCH --account=gsd-fv3-dev
-#
 # -- Set the name of the job, or Slurm will default to the name of the script
 #SBATCH --job-name=MPAS-test
 #
@@ -120,7 +107,13 @@ lbc_file="mpas.$code_base.$namelist.$domain.$resolution.$source.lbc.$datestring.
 sst_file="mpas.$code_base.$namelist.$domain.$resolution.$source.sfc_update.$datestring.nc"
 ugwp_file="mpas.$code_base.$namelist.$domain.$resolution.ugwp_oro_data.nc"
 script_home=$PWD
-source_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ungrib"
+if [ $SLURM_JOB_PARTITION = "xjet" ]; then 
+  system_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas"
+elif [ $SLURM_JOB_PARTITION = "hera" ]; then 
+  system_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas"
+fi
+source_directory=$system_directory"/data/ungrib"
+geog_directory=$system_directory"/data/mpas_static"
 
 echo
 echo "################################################################"
@@ -137,6 +130,7 @@ echo "domain:             $domain"
 echo "resolution:         $resolution"
 echo "input source:       $source"
 echo "source directory:   $source_directory"
+echo "geog directory:     $geog_directory"
 echo "use_climo_aerosols: $use_climo_aerosols"
 echo "static_file:        $static_file"
 echo "init_file:          $init_file"
@@ -186,13 +180,14 @@ echo "static.nc already exists so moving on to next step"
 else
 
 cp $script_home/case_files/$namelist/step1_static/* .
+ln -sf $geog_directory .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.grid.nc grid.nc
+  ln -sf $system_directory/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/code-MPAS/MPAS-Limited-Area/conus.$resolution.grid.nc grid.nc
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.grid.nc grid.nc
+  ln -sf $system_directory/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/data/$resolution/grid/x1.40962.grid.nc grid.nc
 fi
 
 ln -sf $executable init_atmosphere_model
@@ -230,9 +225,9 @@ else
 cp $script_home/case_files/$namelist/step2_init/$source.$yyyy$mm$dd$hh/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $source_directory/$source.$yyyy$mm$dd$hh/*$yyyy-$mm-$dd"_"$hh .
@@ -240,7 +235,7 @@ ln -sf $executable init_atmosphere_model
 ln -sf ../step1_static/static.nc .
 
 if [ $use_climo_aerosols = "true" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/aerosols/QNWFA_QNIFA_SIGMA_MONTHLY.dat .
+  ln -sf $system_directory/data/aerosols/QNWFA_QNIFA_SIGMA_MONTHLY.dat .
 fi
 
 time srun -n $SLURM_NTASKS ./init_atmosphere_model
@@ -278,13 +273,13 @@ else
 cp $script_home/case_files/$namelist/step3_lbc/$source.$yyyy$mm$dd$hh/* .
 
 
-ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+ln -sf $system_directory/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 ln -sf $source_directory/$source.$yyyy$mm$dd$hh/* .
 ln -sf $executable init_atmosphere_model
 ln -sf ../step2_init/init.nc .
 
 if [ $use_climo_aerosols = "true" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/aerosols/QNWFA_QNIFA_SIGMA_MONTHLY.dat .
+  ln -sf $system_directory/data/aerosols/QNWFA_QNIFA_SIGMA_MONTHLY.dat .
 fi
 
 time srun -n $SLURM_NTASKS ./init_atmosphere_model
@@ -324,9 +319,9 @@ else
 cp $script_home/case_files/$namelist/step4_sst/$source.$yyyy$mm$dd$hh/* .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $source_directory/sst.$yyyy$mm$dd$hh/SST* .

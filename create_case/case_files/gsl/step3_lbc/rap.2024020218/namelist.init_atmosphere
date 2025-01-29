@@ -14,7 +14,7 @@
     config_nvegopt       = 2
 /
 &data_sources
-    config_geog_data_path = '/lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/mpas_static/'
+    config_geog_data_path = './mpas_static/'
     config_met_prefix = 'RAP'
     config_sfc_prefix = 'SST'
     config_fg_interval = 10800

@@ -13,16 +13,37 @@
 #      -  currently we are only doing debug tests so compile_flag should be "intdebug"
 #   4. change gsl_input_case_base to the location of the gsl case input data (should be the most recent input data)
 #   5. change ncar_input_case_base to the location of the ncar case input data (shouldn't change often)
-#   6. run the script: sh run_mpas_GSL_cases.sh
+#   6. set system configuration:
+#      - partition: xjet for Jet, hera for Hera
+#      - account: account to charge, obviously
+#      - queue: batch or debug (if you're impatient)
+#   7. run the script: sh run_mpas_GSL_cases.sh
 
 model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
 model_executable="atmosphere_model.v8.2.2-2.0.intdebug"
 model_code_base="gsl-v8.2.2-2.0-intdebug"
-gsl_input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-v8.2.2-2.0-intelmpi/"
-ncar_input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-v8.2.2-intelmpi/"
+gsl_input_case_base="gsl-v8.2.2-2.0-intelmpi"
+ncar_input_case_base="ncar-v8.2.2-intelmpi"
+partition="xjet"
+account="gsd-fv3-dev"
+queue="batch"
 
-sbatch run_mpas_case_A1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
-sbatch run_mpas_case_B1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
-sbatch run_mpas_case_C5GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
-sbatch run_mpas_case_C7GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
-sbatch run_mpas_case_C8GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
+################################################################
+################################################################
+# shouldn't need to change below this line
+################################################################
+################################################################
+
+if [ $partition = "xjet" ]; then 
+  system_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
+elif [ $partition = "hera" ]; then 
+  system_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
+fi
+gsl_input_case_base=$system_directory$gsl_input_case_base/
+ncar_input_case_base=$system_directory$ncar_input_case_base/
+
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_A1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_B1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C5GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C7GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C8GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base

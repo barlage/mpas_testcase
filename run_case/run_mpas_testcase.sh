@@ -100,6 +100,11 @@ lbc_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.$source.lbc.
 sst_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.$source.sfc_update.$datestring.nc"
 ugwp_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.ugwp_oro_data.nc"
 script_home=$PWD
+if [ $SLURM_JOB_PARTITION = "xjet" ]; then 
+  system_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas"
+elif [ $SLURM_JOB_PARTITION = "hera" ]; then 
+  system_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas"
+fi
 
 if [ $clean_before = "true" ]; then 
   run_directory=$model_code_base.$physics_suite.$input_case_directory
@@ -117,6 +122,7 @@ echo "physics suite:      $physics_suite"
 echo "namelist version:   $namelist_version"
 echo "model code name:    $model_code_base"
 echo "case directory:     $input_case_base$input_case_directory"
+echo "system directory:   $system_directory"
 
 module purge
 module load $modules
@@ -149,9 +155,9 @@ ln -sf $model_base_directory/src/core_atmosphere/physics/physics_wrf/files/*DATA
 ln -sf $model_base_directory/src/core_atmosphere/physics/physics_noahmp/parameters/NoahmpTable.TBL .
 
 if [ $domain = "conus" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/code-MPAS/MPAS-Limited-Area/conus.$resolution.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 elif [ $domain = "global" ]; then 
-  ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
+  ln -sf $system_directory/data/$resolution/grid/x1.40962.graph.info.part.$SLURM_NTASKS graph.info.part.$SLURM_NTASKS
 fi
 
 ln -sf $model_base_directory$model_executable atmosphere_model
@@ -165,13 +171,13 @@ if [ $source = "gfs" ]; then
 fi
 if [ $namelist_version = "gsl" ]; then 
  ln -sf $input_case_base$input_case_directory/case_files/$ugwp_file mpas.ugwp_oro_data.nc
- ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/ugwp/ugwp_limb_tau.nc . 
+ ln -sf $system_directory/data/ugwp/ugwp_limb_tau.nc . 
 fi
 if [ $physics_suite = "hrrrv5" ]; then 
- ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/microphysics/tables_tempo/* .
+ ln -sf $system_directory/data/microphysics/tables_tempo/* .
 fi
 if [ $physics_suite = "convection_permitting" ]; then 
- ln -sf /lfs5/BMC/wrfruc/Michael.Barlage/mpas/data/microphysics/tables_thompson/* .
+ ln -sf $system_directory/data/microphysics/tables_thompson/* .
 fi
 
 cp $script_home/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite/* .

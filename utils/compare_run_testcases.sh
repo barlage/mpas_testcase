@@ -19,10 +19,10 @@
 ##############################
 
 test_repo_name="gsl"                # repository name
-version_to_compare="v8.2.2-2.0"     # GSL version proposed for this PR
-test_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas/mpas_testcase/run_case/"
+version_to_compare="v8.2.2-2.1"     # GSL version proposed for this PR
+test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/mpas_testcase/run_case/"
 gsl_version_baseline="v8.2.2-2.0"   # GSL version of current develop
-partition="hera"
+partition="xjet"                    # xjet or hera
 
 #####################################
 # options that change infrequently

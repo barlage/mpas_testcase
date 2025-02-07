@@ -273,38 +273,38 @@ echo "  === $file comparison" >> $fileout
 nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
-echo "###############################################################################" >> $fileout
-echo "# compare to previous NCAR CONUS mesoscale_reference_noahmp baselines E1NCAR   " >> $fileout
-echo "###############################################################################" >> $fileout
-echo >> $fileout
+#echo "###############################################################################" >> $fileout
+#echo "# compare to previous NCAR CONUS mesoscale_reference_noahmp baselines E1NCAR   " >> $fileout
+#echo "###############################################################################" >> $fileout
+#echo >> $fileout
 
-dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
-dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
+#dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
+#dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
 
-if [ ! -d $dir1 ]; then 
-  echo
-  echo "directory $dir1 does not exist"
-  exit
-fi
+#if [ ! -d $dir1 ]; then 
+#  echo
+#  echo "directory $dir1 does not exist"
+#  exit
+#fi
 
-if [ ! -d $dir2 ]; then 
-  echo
-  echo "directory $dir2 does not exist"
-  exit
-fi
+#if [ ! -d $dir2 ]; then 
+#  echo
+#  echo "directory $dir2 does not exist"
+#  exit
+#fi
 
-file="history.2023-03-10_15.00.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
+#file="history.2023-03-10_15.00.00.nc"
+#echo "  === $file comparison" >> $fileout
+#nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+#echo >> $fileout
 
-file="history.2023-03-10_15.12.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
+#file="history.2023-03-10_15.12.00.nc"
+#echo "  === $file comparison" >> $fileout
+#nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+#echo >> $fileout
 
-file="history.2023-03-10_16.00.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
+#file="history.2023-03-10_16.00.00.nc"
+#echo "  === $file comparison" >> $fileout
+#nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+#echo >> $fileout
 

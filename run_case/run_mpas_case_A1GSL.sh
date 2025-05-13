@@ -160,7 +160,7 @@ fi
 if [ $physics_suite = "hrrrv5" ]; then 
  ln -sf $system_directory/data/microphysics/tables_tempo/* .
 fi
-if [ $physics_suite = "convection_permitting" ]; then 
+if [ $physics_suite = "convection_permitting" ] || [ $physics_suite = "convection_permitting_none" ]; then 
  ln -sf $system_directory/data/microphysics/tables_thompson/* .
 fi
 

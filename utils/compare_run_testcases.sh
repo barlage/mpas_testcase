@@ -19,9 +19,9 @@
 ##############################
 
 test_repo_name="gsl"                # repository name
-version_to_compare="v8.2.2-3.9"     # GSL version proposed for this PR
+version_to_compare="v8.2.2-3.10"     # GSL version proposed for this PR
 test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/mpas_testcase/run_case/"
-gsl_version_baseline="v8.2.2-3.8"   # GSL version of current develop
+gsl_version_baseline="v8.2.2-3.9"   # GSL version of current develop
 partition="xjet"                    # xjet or hera
 
 #####################################
@@ -70,6 +70,41 @@ echo >> $fileout
 
 dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.mesoscale_reference.ncar.ncar.conus.120km.gfs.2023031015/"
 dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag.mesoscale_reference.ncar.ncar.conus.120km.gfs.2023031015/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
+
+file="history.2023-03-10_15.00.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+file="history.2023-03-10_15.12.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+file="history.2023-03-10_16.00.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+echo "#############################################################################" >> $fileout
+echo "# compare to previous GSL CONUS convection_permitting_none baselines F1GSL   " >> $fileout
+echo "#############################################################################" >> $fileout
+echo >> $fileout
+
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
+dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
 
 if [ ! -d $dir1 ]; then 
   echo
@@ -204,7 +239,7 @@ nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
 echo "######################################################################" >> $fileout
-echo "# compare to previous GSL CONUS hrrrv5 RAP winter baselines C8GSL     " >> $fileout
+echo "# compare to previous GSL CONUS hrrrv5 RAP summer baselines C8GSL     " >> $fileout
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
@@ -245,6 +280,41 @@ echo >> $fileout
 
 dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.mesoscale_reference.ncar.ncar.conus.120km.gfs.2023031015/"
 dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag.mesoscale_reference.ncar.ncar.conus.120km.gfs.2023031015/"
+
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
+
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
+
+file="history.2023-03-10_15.00.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+file="history.2023-03-10_15.12.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+file="history.2023-03-10_16.00.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
+
+echo "###############################################################################" >> $fileout
+echo "# compare to previous NCAR CONUS convection_permitting_none baselines F1NCAR   " >> $fileout
+echo "###############################################################################" >> $fileout
+echo >> $fileout
+
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
+dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
 
 if [ ! -d $dir1 ]; then 
   echo

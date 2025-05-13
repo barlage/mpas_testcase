@@ -23,8 +23,8 @@
 #   7. run the script: sh run_mpas_GSL_cases.sh
 
 model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
-model_executable="atmosphere_model.v8.2.2-3.9.intdebug"
-model_code_base="gsl-v8.2.2-3.9-intdebug"
+model_executable="atmosphere_model.v8.2.2-3.10.intdebug"
+model_code_base="gsl-v8.2.2-3.10-intdebug"
 gsl_input_case_base="gsl-v8.2.2-2.11-intelmpi"
 ncar_input_case_base="ncar-v8.2.2-intelmpi"
 partition="xjet"
@@ -46,7 +46,7 @@ gsl_input_case_base=$system_directory$gsl_input_case_base/
 ncar_input_case_base=$system_directory$ncar_input_case_base/
 
 sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_A1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_B1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_F1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
 sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_E1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
 sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C5GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
 sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C7GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base

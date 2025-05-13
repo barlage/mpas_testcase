@@ -16,17 +16,17 @@ clean_before="true"
 model_base_directory=$1
 model_executable=$2
 model_code_base=$3
-physics_suite="hrrrv5"
+physics_suite="convection_permitting_none"
 run_directory=""
-namelist_version="gsl"
+namelist_version="ncar"
 
 ################################################################
 # input file options
 ################################################################
 
 input_case_base=$4
-input_code_base="gsl"
-input_namelist="gsl"
+input_code_base="ncar"
+input_namelist="ncar"
 resolution="120km"
 domain="conus"
 source="gfs"

@@ -1,5 +1,5 @@
 # mpas_testcase
-Environment to create and run pre-defined MPAS test cases - only on jet for now
+Environment to create and run pre-defined MPAS test cases - only on `jet` and `hera` for now
 
 ## Available cases:
 
@@ -59,17 +59,21 @@ global: ntasks = 24; time = 3 minutes
 
 `model_code_base` : name to identify code version; only used if `run_directory` is not given
 
-`physics_suite` : physics suite to be run [`"mesoscale_reference"`]
+`physics_suite` : physics suite to be run [`"mesoscale_reference"`,`"convection_permitting"`,`"convection_permitting_none"`,`"hrrrv5"`]
 
 `run_directory` : path to where you want model to be run; if `run_directory=""` then script will create a directory in the `$PWD` (see below)
 
-`namelist_version` : namelist to be used [`"ncar"`,`"gsl"`]
+`namelist_version` : namelist version to be used [`"ncar"`,`"gsl"`], found in `case_files` directory
 
 ### configuration options related to input files
 
-`input_case_base` : top level directory of case input files
+`input_case_base` : top level directory of case input files created in `create_case` step
 
-`input_code_base` : code used to create input files [`"ncar"`,`"gsl"`]
+`input_code_base` : source of code used to create input files [`"ncar"`,`"gsl"`]
+
+`input_namelist` : namelist version used to create input files [`"ncar"`,`"gsl"`]
+
+`resolution` : spatial resolution of grid [`"120km"`]
 
 `domain` : spatial extent [`"conus"`,`"global"`]
 
@@ -84,7 +88,9 @@ When run_directory is not specified a local directory will be created. For
 model_code_base="ncar_v8.2.2"
 physics_suite="mesoscale_reference"
 input_code_base="ncar"
+input_namelist="ncar"
 domain="conus"
+resolution="120km"
 source="gfs"
 ```
-directory name will be: `ncar_v8.2.2.mesoscale_reference.ncar.conus.gfs.2023031015`
+directory name will be: `ncar_v8.2.2.mesoscale_reference.ncar.ncar.conus.120km.gfs.2023031015`

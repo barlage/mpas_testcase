@@ -61,6 +61,10 @@
     config_radtsw_interval = '00:30:00'
     config_bucket_update = 'none'
     config_physics_suite = 'convection_permitting'
+    config_mynn_closure = 2.5
+    config_mynn_mixlength = 2
+    config_mynn_edmf_mom = 0
+    config_mynn_mixscalars = 1
     config_microp_re = false
 /
 &soundings

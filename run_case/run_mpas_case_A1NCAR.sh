@@ -14,8 +14,8 @@ clean_before="true"
 ################################################################
 
 model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/MPAS-Model/"
-model_executable="atmosphere_model.v8.2.2.intdebug"
-model_code_base="ncar-v8.2.2-intdebug"
+model_executable="atmosphere_model.v8.3.0.intdebug"
+model_code_base="ncar-v8.3.0-intdebug"
 physics_suite="mesoscale_reference"
 run_directory=""
 namelist_version="ncar"
@@ -24,7 +24,7 @@ namelist_version="ncar"
 # input file options
 ################################################################
 
-input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-v8.2.2-intelmpi/"
+input_case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-v8.3.0-intelmpi/"
 input_code_base="ncar"
 input_namelist="ncar"
 resolution="120km"

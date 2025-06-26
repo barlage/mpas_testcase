@@ -19,8 +19,8 @@
 
 test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 test_repo_name="gsl"                 # repository name
-version_to_compare="v8.2.2-2.0"      # GSL version proposed for this PR
-gsl_version_baseline="v8.2.2-2.0"    # GSL version of current develop
+version_to_compare="v8.3.0-1.0"      # GSL version proposed for this PR
+gsl_version_baseline="v8.2.2-2.11"    # GSL version of current develop
 
 
 #####################################
@@ -28,7 +28,7 @@ gsl_version_baseline="v8.2.2-2.0"    # GSL version of current develop
 #  no need to change unless ncar baseline changes or baseline directories changes or compile flag changes
 #####################################
 
-ncar_version_baseline="v8.2.2" # NCAR version
+ncar_version_baseline="v8.3.0" # NCAR version
 
 gsl_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 ncar_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"

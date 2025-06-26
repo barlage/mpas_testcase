@@ -19,9 +19,9 @@
 ##############################
 
 test_repo_name="gsl"                # repository name
-version_to_compare="v8.2.2-3.10"     # GSL version proposed for this PR
-test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/mpas_testcase/run_case/"
-gsl_version_baseline="v8.2.2-3.9"   # GSL version of current develop
+version_to_compare="v8.3.0-1.0"     # GSL version proposed for this PR
+test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baseline_factory/mpas_testcase/run_case/"
+gsl_version_baseline="v8.2.3-3.12"   # GSL version of current develop
 partition="xjet"                    # xjet or hera
 
 #####################################
@@ -29,7 +29,7 @@ partition="xjet"                    # xjet or hera
 #  no need to change unless ncar baseline changes or baseline directories changes or compile flag changes
 #####################################
 
-ncar_version_baseline="v8.2.2" # NCAR version
+ncar_version_baseline="v8.3.0" # NCAR version
 
 if [ $partition = "xjet" ]; then 
   gsl_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
@@ -343,38 +343,38 @@ echo "  === $file comparison" >> $fileout
 nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
-#echo "###############################################################################" >> $fileout
-#echo "# compare to previous NCAR CONUS mesoscale_reference_noahmp baselines E1NCAR   " >> $fileout
-#echo "###############################################################################" >> $fileout
-#echo >> $fileout
+echo "###############################################################################" >> $fileout
+echo "# compare to previous NCAR CONUS mesoscale_reference_noahmp baselines E1NCAR   " >> $fileout
+echo "###############################################################################" >> $fileout
+echo >> $fileout
 
-#dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
-#dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
+dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
+dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag.mesoscale_reference_noahmp.ncar.ncar.conus.120km.gfs.2023031015/"
 
-#if [ ! -d $dir1 ]; then 
-#  echo
-#  echo "directory $dir1 does not exist"
-#  exit
-#fi
+if [ ! -d $dir1 ]; then 
+  echo
+  echo "directory $dir1 does not exist"
+  exit
+fi
 
-#if [ ! -d $dir2 ]; then 
-#  echo
-#  echo "directory $dir2 does not exist"
-#  exit
-#fi
+if [ ! -d $dir2 ]; then 
+  echo
+  echo "directory $dir2 does not exist"
+  exit
+fi
 
-#file="history.2023-03-10_15.00.00.nc"
-#echo "  === $file comparison" >> $fileout
-#nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-#echo >> $fileout
+file="history.2023-03-10_15.00.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
 
-#file="history.2023-03-10_15.12.00.nc"
-#echo "  === $file comparison" >> $fileout
-#nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-#echo >> $fileout
+file="history.2023-03-10_15.12.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
 
-#file="history.2023-03-10_16.00.00.nc"
-#echo "  === $file comparison" >> $fileout
-#nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-#echo >> $fileout
+file="history.2023-03-10_16.00.00.nc"
+echo "  === $file comparison" >> $fileout
+nccmp -dsSqf $dir1$file $dir2$file >> $fileout
+echo >> $fileout
 

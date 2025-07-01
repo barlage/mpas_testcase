@@ -23,10 +23,10 @@
 #   7. run the script: sh run_mpas_GSL_cases.sh
 
 model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
-model_executable="atmosphere_model.v8.2.2-3.10.intdebug"
-model_code_base="gsl-v8.2.2-3.10-intdebug"
-gsl_input_case_base="gsl-v8.2.2-2.11-intelmtipi"
-ncar_input_case_base="ncar-v8.2.2-intelmpi"
+model_executable="atmosphere_model.v8.3.0-1.3.intdebug"
+model_code_base="gsl-v8.3.0-1.3-intdebug"
+gsl_input_case_base="gsl-v8.3.0-1.0-intelmpi"
+ncar_input_case_base="ncar-v8.3.0-intelmpi"
 partition="xjet"
 account="gsd-fv3-dev"
 queue="batch"

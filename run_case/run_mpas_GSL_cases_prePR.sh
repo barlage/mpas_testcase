@@ -46,4 +46,6 @@ gsl_input_case_base=$system_directory$gsl_input_case_base/
 ncar_input_case_base=$system_directory$ncar_input_case_base/
 
 sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_A1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_B1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
 sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_F1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_E1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base

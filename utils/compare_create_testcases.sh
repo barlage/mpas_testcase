@@ -19,8 +19,8 @@
 
 test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 test_repo_name="gsl"                 # repository name
-version_to_compare="v8.3.0-1.0"      # GSL version proposed for this PR
-gsl_version_baseline="v8.2.2-2.11"    # GSL version of current develop
+version_to_compare="v8.3.0-1.8"      # GSL version proposed for this PR
+gsl_version_baseline="v8.3.0-1.0"    # GSL version of current develop
 
 
 #####################################

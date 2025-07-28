@@ -16,8 +16,8 @@
 #      - queue: batch or debug (if you're impatient)
 #   4. run the script: sh create_mpas_GSL_cases.sh
 
-case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-v8.3.0-1.0-intelmpi/"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.v8.3.0-1.0.intelmpi"
+case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/gsl-v8.3.0-1.8-intelmpi/"
+executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/init_atmosphere_model.v8.3.0-1.8.intelmpi"
 partition="xjet"
 account="gsd-fv3-dev"
 queue="batch"

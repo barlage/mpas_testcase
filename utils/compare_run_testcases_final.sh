@@ -19,9 +19,9 @@
 ##############################
 
 test_repo_name="gsl"                # repository name
-version_to_compare="v8.3.0-1.3"     # GSL version proposed for this PR
+version_to_compare="v8.3.0-1.8"     # GSL version proposed for this PR
 test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baseline_factory/mpas_testcase/run_case/"
-gsl_version_baseline="v8.3.0-1.2"   # GSL version of current develop
+gsl_version_baseline="v8.3.0-1.6"   # GSL version of current develop
 partition="xjet"                    # xjet or hera
 
 #####################################

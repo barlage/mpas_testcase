@@ -17,17 +17,17 @@
 #   5. change ncar_input_case_base to the location of the ncar case input data 
 #        (shouldn't change often, only when ncar version is updated)
 #   6. set system configuration:
-#      - partition: xjet for Jet, hera for Hera
+#      - partition: xjet for Jet, u1-compute for Ursa
 #      - account: account to charge, obviously
 #      - queue: batch or debug (if you're impatient)
-#   7. run the script: sh run_mpas_GSL_cases.sh
+#   7. run the script: sh run_mpas_GSL_cases_final.sh
 
-model_base_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/gsl/gsl-fork/MPAS-Model/"
+model_base_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/code/gsl/gsl-fork/MPAS-Model/"
 model_executable="atmosphere_model.v8.3.0-1.8.intdebug"
 model_code_base="gsl-v8.3.0-1.8-intdebug"
 gsl_input_case_base="gsl-v8.3.0-1.8-intelmpi"
 ncar_input_case_base="ncar-v8.3.0-intelmpi"
-partition="xjet"
+partition="u1-compute"
 account="gsd-fv3-dev"
 queue="batch"
 
@@ -39,8 +39,8 @@ queue="batch"
 
 if [ $partition = "xjet" ]; then 
   system_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
-elif [ $partition = "hera" ]; then 
-  system_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
+elif [ $partition = "u1-compute" ]; then 
+  system_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 fi
 gsl_input_case_base=$system_directory$gsl_input_case_base/
 ncar_input_case_base=$system_directory$ncar_input_case_base/

@@ -11,7 +11,7 @@
 #   3. change version_to_compare to the version of your test repository, e.g., v8.2.2-1.0
 #   4. change test_directory to the location of your test case output
 #   5. change gsl_version_baseline to the gsl fork version that you want to compare to, for PRs should be top of develop branch
-#   6. change partition to either "xjet" or "hera"
+#   6. change partition to either "xjet" or "ursa"
 #   6. run the script: sh compare_run_testcases.sh
 
 ##############################
@@ -20,9 +20,9 @@
 
 test_repo_name="gsl"                # repository name
 version_to_compare="v8.3.0-1.8"     # GSL version proposed for this PR
-test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baseline_factory/mpas_testcase/run_case/"
-gsl_version_baseline="v8.3.0-1.6"   # GSL version of current develop
-partition="xjet"                    # xjet or hera
+test_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baseline_factory/mpas_testcase/run_case/"
+gsl_version_baseline="v8.3.0-1.8"   # GSL version of current develop
+partition="ursa"                    # xjet or ursa
 
 #####################################
 # options that change infrequently
@@ -34,9 +34,9 @@ ncar_version_baseline="v8.3.0" # NCAR version
 if [ $partition = "xjet" ]; then 
   gsl_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
   ncar_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
-elif [ $partition = "hera" ]; then 
-  gsl_baseline_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
-  ncar_baseline_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
+elif [ $partition = "ursa" ]; then 
+  gsl_baseline_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
+  ncar_baseline_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
 fi
 
 # compile flag used

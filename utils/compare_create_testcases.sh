@@ -17,7 +17,7 @@
 # options that change often
 ##############################
 
-test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
+test_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 test_repo_name="gsl"                 # repository name
 version_to_compare="v8.3.0-1.8"      # GSL version proposed for this PR
 gsl_version_baseline="v8.3.0-1.0"    # GSL version of current develop
@@ -30,8 +30,8 @@ gsl_version_baseline="v8.3.0-1.0"    # GSL version of current develop
 
 ncar_version_baseline="v8.3.0" # NCAR version
 
-gsl_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
-ncar_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
+gsl_baseline_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
+ncar_baseline_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/"
 
 # compile flag used
 # use "-gsltest"  for intel-mpi-gsltest

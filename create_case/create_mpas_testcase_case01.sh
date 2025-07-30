@@ -1,16 +1,20 @@
 #!/bin/sh -l
 #
+# Run from command line:
+#  sbatch --account=gsd-fv3-dev --qos=batch --partition=u1-compute --ntasks=8 --time=0:10:00 create_mpas_testcase_case01.sh \
+#    /scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-v8.3.0-intelmpi/ \
+#    /scratch4/BMC/wrfruc/Michael.Barlage/mpas/code/ncar/MPAS-Model/init_atmosphere_model.v8.3.0.intelmpi
+#
 # -- Set the name of the job, or Slurm will default to the name of the script
 #SBATCH --job-name=MPAS-test
 #
 # -- Tell the batch system to set the working directory to the current working directory
 #SBATCH --chdir=.
 
-modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="true"
 clean_after="true"
-case_base="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/create_case/ncar-v8.3.0-intelmpi/"
-executable="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/testing/code/ncar/MPAS-Model/init_atmosphere_model.v8.3.0.intelmpi"
+case_base=$1
+executable=$2
 code_base="ncar"
 namelist="ncar"
 domain="conus"
@@ -109,8 +113,16 @@ ugwp_file="mpas.$code_base.$namelist.$domain.$resolution.ugwp_oro_data.nc"
 script_home=$PWD
 if [ $SLURM_JOB_PARTITION = "xjet" ]; then 
   system_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas"
-elif [ $SLURM_JOB_PARTITION = "hera" ]; then 
-  system_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas"
+  modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
+  module purge
+  module load $modules
+elif [ $SLURM_JOB_PARTITION = "u1-compute" ]; then 
+  system_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas"
+  modules="stack-oneapi/2024.2.1 stack-intel-oneapi-mpi/2021.13 parallel-netcdf/1.12.3"
+  module purge
+  module use /contrib/spack-stack/spack-stack-1.9.1/envs/ue-oneapi-2024.2.1/install/modulefiles/Core
+  module load $modules
+  export PNETCDF=$parallel_netcdf_ROOT
 fi
 source_directory=$system_directory"/data/ungrib"
 geog_directory=$system_directory"/data/mpas_static"
@@ -137,9 +149,6 @@ echo "init_file:          $init_file"
 echo "lbc_file(conus):    $lbc_file"
 echo "sst_file:           $sst_file"
 echo "ugwp_file(gsl):     $ugwp_file"
-
-module purge
-module load $modules
 
 ################################################################
 # remove case directory if exists and clean_before is true

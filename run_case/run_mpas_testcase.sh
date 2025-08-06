@@ -178,6 +178,7 @@ if [ $physics_suite = "convection_permitting" ] || [ $physics_suite = "convectio
 fi
 
 cp $script_home/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite/* .
+ln -sf namelist.atmosphere.$source_repo namelist.atmosphere
 
 echo
 echo "################################################################"

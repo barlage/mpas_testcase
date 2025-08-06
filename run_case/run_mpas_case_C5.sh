@@ -12,9 +12,10 @@ clean_before="true"
 # model options
 ################################################################
 
-model_base_directory=$1
-model_executable=$2
-model_code_base=$3
+source_repo=$1
+model_base_directory=$2
+model_executable=$3
+model_code_base=$4
 physics_suite="hrrrv5"
 run_directory=""
 namelist_version="gsl"
@@ -23,7 +24,7 @@ namelist_version="gsl"
 # input file options
 ################################################################
 
-input_case_base=$4
+input_case_base=$5
 input_code_base="gsl"
 input_namelist="gsl"
 resolution="120km"

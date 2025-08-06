@@ -12,9 +12,10 @@ clean_before="true"
 # model options
 ################################################################
 
-model_base_directory=$1
-model_executable=$2
-model_code_base=$3
+source_repo=$1
+model_base_directory=$2
+model_executable=$3
+model_code_base=$4
 physics_suite="convection_permitting_none"
 run_directory=""
 namelist_version="ncar"
@@ -23,7 +24,7 @@ namelist_version="ncar"
 # input file options
 ################################################################
 
-input_case_base=$4
+input_case_base=$5
 input_code_base="ncar"
 input_namelist="ncar"
 resolution="120km"
@@ -169,6 +170,7 @@ if [ $physics_suite = "convection_permitting" ] || [ $physics_suite = "convectio
 fi
 
 cp $script_home/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite/* .
+ln -sf namelist.atmosphere.$source_repo namelist.atmosphere
 
 echo
 echo "################################################################"

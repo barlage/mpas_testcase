@@ -1,7 +1,7 @@
 #!/bin/sh -l
 #
 # -- Set the name of the job, or Slurm will default to the name of the script
-#SBATCH --job-name=MPAS-test
+#SBATCH --job-name=MPAS-test-A1
 #
 # -- Tell the batch system to set the working directory to the current working directory
 #SBATCH --chdir=.

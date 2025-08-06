@@ -11,7 +11,7 @@
 #   3. change version_to_compare to the version of your test repository, e.g., v8.2.2-1.0
 #   4. change test_directory to the location of your test case output
 #   5. change gsl_version_baseline to the gsl fork version that you want to compare to, for PRs should be top of develop branch
-#   6. change partition to either "xjet" or "hera"
+#   6. change partition to either "xjet" or "ursa"
 #   6. run the script: sh compare_run_testcases.sh
 
 ##############################
@@ -19,10 +19,10 @@
 ##############################
 
 test_repo_name="gsl"                # repository name
-version_to_compare="v8.3.0-1.3"     # GSL version proposed for this PR
-test_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/mpas_testcase/run_case/"
-gsl_version_baseline="v8.3.0-1.2"   # GSL version of current develop
-partition="xjet"                    # xjet or hera
+version_to_compare="v8.3.0-1.13"     # GSL version proposed for this PR
+test_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baseline_factory/mpas_testcase/run_case/"
+gsl_version_baseline="v8.3.0-1.12"   # GSL version of current develop
+partition="ursa"                    # xjet or ursa
 
 #####################################
 # options that change infrequently
@@ -34,9 +34,9 @@ ncar_version_baseline="v8.3.0" # NCAR version
 if [ $partition = "xjet" ]; then 
   gsl_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
   ncar_baseline_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
-elif [ $partition = "hera" ]; then 
-  gsl_baseline_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
-  ncar_baseline_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
+elif [ $partition = "ursa" ]; then 
+  gsl_baseline_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
+  ncar_baseline_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/baselines_mpas/run_case/"
 fi
 
 # compile flag used
@@ -64,7 +64,7 @@ echo "         test_repo_name = $test_repo_name" >> $fileout
 echo "" >> $fileout
 
 echo "######################################################################" >> $fileout
-echo "# compare to previous GSL CONUS mesoscale_reference baselines A1GSL   " >> $fileout
+echo "# compare to previous GSL CONUS mesoscale_reference baselines A1      " >> $fileout
 echo "######################################################################" >> $fileout
 echo >> $fileout
 
@@ -99,42 +99,7 @@ nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
 echo "#############################################################################" >> $fileout
-echo "# compare to previous GSL CONUS convection_permitting_none baselines F1GSL   " >> $fileout
-echo "#############################################################################" >> $fileout
-echo >> $fileout
-
-dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
-dir2=$gsl_baseline_directory"gsl-$gsl_version_baseline$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
-
-if [ ! -d $dir1 ]; then 
-  echo
-  echo "directory $dir1 does not exist"
-  exit
-fi
-
-if [ ! -d $dir2 ]; then 
-  echo
-  echo "directory $dir2 does not exist"
-  exit
-fi
-
-file="history.2023-03-10_15.00.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
-
-file="history.2023-03-10_15.12.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
-
-file="history.2023-03-10_16.00.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
-
-echo "#############################################################################" >> $fileout
-echo "# compare to previous GSL CONUS mesoscale_reference_noahmp baselines E1GSL   " >> $fileout
+echo "# compare to previous GSL CONUS mesoscale_reference_noahmp baselines E1      " >> $fileout
 echo "#############################################################################" >> $fileout
 echo >> $fileout
 
@@ -169,7 +134,7 @@ nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
 echo "########################################################################" >> $fileout
-echo "# compare to previous NCAR CONUS mesoscale_reference baselines A1NCAR   " >> $fileout
+echo "# compare to previous NCAR CONUS mesoscale_reference baselines A1       " >> $fileout
 echo "########################################################################" >> $fileout
 echo >> $fileout
 
@@ -204,7 +169,7 @@ nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
 echo "########################################################################" >> $fileout
-echo "# compare to previous NCAR CONUS convection_permitting baselines B1NCAR   " >> $fileout
+echo "# compare to previous NCAR CONUS convection_permitting baselines B1     " >> $fileout
 echo "########################################################################" >> $fileout
 echo >> $fileout
 
@@ -239,42 +204,7 @@ nccmp -dsSqf $dir1$file $dir2$file >> $fileout
 echo >> $fileout
 
 echo "###############################################################################" >> $fileout
-echo "# compare to previous NCAR CONUS convection_permitting_none baselines F1NCAR   " >> $fileout
-echo "###############################################################################" >> $fileout
-echo >> $fileout
-
-dir1=$test_directory"$test_repo_name-$version_to_compare$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
-dir2=$ncar_baseline_directory"ncar-$ncar_version_baseline$compile_flag.convection_permitting_none.ncar.ncar.conus.120km.gfs.2023031015/"
-
-if [ ! -d $dir1 ]; then 
-  echo
-  echo "directory $dir1 does not exist"
-  exit
-fi
-
-if [ ! -d $dir2 ]; then 
-  echo
-  echo "directory $dir2 does not exist"
-  exit
-fi
-
-file="history.2023-03-10_15.00.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
-
-file="history.2023-03-10_15.12.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
-
-file="history.2023-03-10_16.00.00.nc"
-echo "  === $file comparison" >> $fileout
-nccmp -dsSqf $dir1$file $dir2$file >> $fileout
-echo >> $fileout
-
-echo "###############################################################################" >> $fileout
-echo "# compare to previous NCAR CONUS mesoscale_reference_noahmp baselines E1NCAR   " >> $fileout
+echo "# compare to previous NCAR CONUS mesoscale_reference_noahmp baselines E1       " >> $fileout
 echo "###############################################################################" >> $fileout
 echo >> $fileout
 

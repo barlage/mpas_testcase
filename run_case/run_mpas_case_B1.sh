@@ -1,12 +1,11 @@
 #!/bin/sh -l
 #
 # -- Set the name of the job, or Slurm will default to the name of the script
-#SBATCH --job-name=MPAS-test
+#SBATCH --job-name=MPAS-test-B1
 #
 # -- Tell the batch system to set the working directory to the current working directory
 #SBATCH --chdir=.
 
-modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
 clean_before="true"
 
 ################################################################
@@ -16,17 +15,17 @@ clean_before="true"
 model_base_directory=$1
 model_executable=$2
 model_code_base=$3
-physics_suite="hrrrv5"
+physics_suite="convection_permitting"
 run_directory=""
-namelist_version="gsl"
+namelist_version="ncar"
 
 ################################################################
 # input file options
 ################################################################
 
 input_case_base=$4
-input_code_base="gsl"
-input_namelist="gsl"
+input_code_base="ncar"
+input_namelist="ncar"
 resolution="120km"
 domain="conus"
 source="gfs"
@@ -86,8 +85,16 @@ ugwp_file="mpas.$input_code_base.$input_namelist.$domain.$resolution.ugwp_oro_da
 script_home=$PWD
 if [ $SLURM_JOB_PARTITION = "xjet" ]; then 
   system_directory="/lfs5/BMC/wrfruc/Michael.Barlage/mpas"
-elif [ $SLURM_JOB_PARTITION = "hera" ]; then 
-  system_directory="/scratch1/BMC/wrfruc/Michael.Barlage/mpas"
+  modules="gnu intel/2023.2.0 impi/2023.2.0 pnetcdf/1.12.3"
+  module purge
+  module load $modules
+elif [ $SLURM_JOB_PARTITION = "u1-compute" ]; then 
+  system_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas"
+  modules="stack-oneapi/2024.2.1 stack-intel-oneapi-mpi/2021.13 parallel-netcdf/1.12.3"
+  module purge
+  module use /contrib/spack-stack/spack-stack-1.9.1/envs/ue-oneapi-2024.2.1/install/modulefiles/Core
+  module load $modules
+  export PNETCDF=$parallel_netcdf_ROOT
 fi
 
 if [ $clean_before = "true" ]; then 
@@ -107,9 +114,6 @@ echo "namelist version:   $namelist_version"
 echo "model code name:    $model_code_base"
 echo "case directory:     $input_case_base$input_case_directory"
 echo "system directory:   $system_directory"
-
-module purge
-module load $modules
 
 ################################################################
 # remove case directory if exists and clean_before is true

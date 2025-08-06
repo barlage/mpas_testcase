@@ -23,8 +23,8 @@
 #   7. run the script: sh run_mpas_GSL_cases_final.sh
 
 model_base_directory="/scratch4/BMC/wrfruc/Michael.Barlage/mpas/code/gsl/gsl-fork/MPAS-Model/"
-model_executable="atmosphere_model.v8.3.0-1.8.intdebug"
-model_code_base="gsl-v8.3.0-1.8-intdebug"
+model_executable="atmosphere_model.v8.3.0-1.13.intdebug"
+model_code_base="gsl-v8.3.0-1.13-intdebug"
 gsl_input_case_base="gsl-v8.3.0-1.8-intelmpi"
 ncar_input_case_base="ncar-v8.3.0-intelmpi"
 partition="u1-compute"
@@ -45,10 +45,9 @@ fi
 gsl_input_case_base=$system_directory$gsl_input_case_base/
 ncar_input_case_base=$system_directory$ncar_input_case_base/
 
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_A1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_B1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_F1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_E1GSL.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C5GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C7GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
-sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 run_mpas_case_C8GSL.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 --mem=8g run_mpas_case_A1.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 --mem=8g run_mpas_case_B1.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 --mem=8g run_mpas_case_E1.sh $model_base_directory $model_executable $model_code_base $ncar_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 --mem=8g run_mpas_case_C5.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 --mem=8g run_mpas_case_C7.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base
+sbatch --account=$account --qos=$queue --partition=$partition --ntasks=4 --time=0:02:00 --mem=8g run_mpas_case_C8.sh $model_base_directory $model_executable $model_code_base $gsl_input_case_base

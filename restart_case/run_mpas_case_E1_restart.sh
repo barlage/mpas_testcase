@@ -170,7 +170,7 @@ if [ $physics_suite = "convection_permitting" ]; then
  ln -sf $system_directory/data/microphysics/tables_thompson/* .
 fi
 
-cp $script_home/../restart_case/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite.restart1/* .
+cp $script_home/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite.restart1/* .
 
 echo
 echo "################################################################"
@@ -224,7 +224,7 @@ if [ $physics_suite = "convection_permitting" ]; then
  ln -sf $system_directory/data/microphysics/tables_thompson/* .
 fi
 
-cp $script_home/../restart_case/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite.restart2/* .
+cp $script_home/case_files/$namelist_version/$domain/$source.$yyyy$mm$dd$hh/$physics_suite.restart2/* .
 
 echo
 echo "################################################################"
